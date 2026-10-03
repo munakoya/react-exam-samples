@@ -1,0 +1,29 @@
+/* 集計：入るだけ横に並べ、狭い画面では2列に折り返す */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-3);
+}
+
+.summaryItem {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+.summaryItem dt {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.summaryItem dd {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+/* 期限切れが1件以上あれば赤くする（TSX の data-alert と連動） */
+.summaryItem[data-alert="true"] {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}

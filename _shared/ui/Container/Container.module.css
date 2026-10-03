@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+  margin-inline: auto; /* 左右の余白を自動にして中央に寄せる */
+  padding: var(--space-6) var(--space-4);
+}
+
+/* 最大幅の種類（TSX の data-size と連動） */
+.container[data-size="sm"] {
+  max-width: var(--container-sm);
+}
+.container[data-size="md"] {
+  max-width: var(--container-md);
+}
+.container[data-size="lg"] {
+  max-width: var(--container-lg);
+}

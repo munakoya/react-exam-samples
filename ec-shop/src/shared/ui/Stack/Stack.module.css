@@ -1,0 +1,43 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+}
+
+/* ---------- 向き ---------- */
+.stack[data-direction="row"] {
+  flex-direction: row;
+}
+
+/* ---------- 直角方向のそろえ方（align-items） ---------- */
+.stack[data-align="start"] {
+  align-items: flex-start;
+}
+.stack[data-align="center"] {
+  align-items: center;
+}
+.stack[data-align="end"] {
+  align-items: flex-end;
+}
+.stack[data-align="stretch"] {
+  align-items: stretch;
+}
+
+/* ---------- 並べる向きのそろえ方（justify-content） ---------- */
+.stack[data-justify="start"] {
+  justify-content: flex-start;
+}
+.stack[data-justify="center"] {
+  justify-content: center;
+}
+.stack[data-justify="end"] {
+  justify-content: flex-end;
+}
+.stack[data-justify="between"] {
+  justify-content: space-between;
+}
+
+/* ---------- 折り返し ---------- */
+.stack[data-wrap="true"] {
+  flex-wrap: wrap;
+}

@@ -1,0 +1,24 @@
+/* 左：一覧（伸び縮み） 右：合計（300px 固定）。狭い画面では縦に並べる */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (width < 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+ * 2列のときだけ、スクロールしても合計を画面の上の方に残す（sticky は親の layout の中だけで効く）。
+ * 1列のときに付けると、下のフォームの上に重なってしまう
+ */
+@media (width >= 900px) {
+  .summary {
+    position: sticky;
+    top: var(--space-4);
+  }
+}

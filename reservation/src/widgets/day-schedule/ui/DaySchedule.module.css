@@ -1,0 +1,112 @@
+.scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+/*
+ * 列：時刻（4.5em）＋ 会議室の数だけ（最小 140px、余れば等分）
+ * 行：見出し（中身の高さ）＋ 枠の数だけ（1枠 28px）
+ * var(--room-count) などは TSX の style から渡している
+ */
+.grid {
+  display: grid;
+  grid-template-columns: 4.5em repeat(var(--room-count), minmax(140px, 1fr));
+  grid-template-rows: auto repeat(var(--slot-count), 28px);
+}
+
+.corner,
+.roomHeader {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.roomHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  grid-row: 1;
+  border-left: 1px solid var(--color-border);
+  font-weight: 600;
+}
+
+.capacity {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: normal;
+}
+
+/* 時刻は線の上に乗るように、少し上にずらす */
+.timeLabel {
+  grid-column: 1;
+  padding-right: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: right;
+  transform: translateY(-0.7em);
+}
+
+/* 空きの枠。正時は実線、30分は点線 */
+.slot {
+  border-top: 1px dashed var(--color-border);
+  border-left: 1px solid var(--color-border);
+}
+
+.slot[data-hour="true"] {
+  border-top-style: solid;
+}
+
+/* リンクになっている枠（予約できる日）だけ、ホバーで色と「＋」を出す */
+a.slot:hover,
+a.slot:focus-visible {
+  outline: none;
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+}
+
+a.slot:hover::after,
+a.slot:focus-visible::after {
+  content: "＋ 予約";
+  display: block;
+  padding-left: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  line-height: 28px;
+}
+
+/* 予約のブロック。同じマスにある空きの枠より上に表示する */
+.block {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 1px 3px;
+  padding: var(--space-1) var(--space-2);
+  overflow: hidden; /* 短い予約で文字がはみ出さないように */
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--color-primary) 16%, white);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.block:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 26%, white);
+}
+
+.block:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.blockTime {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.blockTitle {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis; /* 入りきらない文字は … にする */
+  white-space: nowrap;
+}

@@ -1,0 +1,18 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px dashed var(--color-border); /* 点線で「ここに何かが入る」ことを示す */
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.description {
+  color: var(--color-text-muted);
+}

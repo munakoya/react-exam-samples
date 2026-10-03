@@ -1,0 +1,15 @@
+/* チェックボックスと文字を横に並べる */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-primary); /* チェック時の色をトークンに合わせる */
+  cursor: pointer;
+}

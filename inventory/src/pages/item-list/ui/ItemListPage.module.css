@@ -1,0 +1,12 @@
+/* 一覧ページだけで使う見た目。値は tokens.css の変数を使う */
+
+/* 検索欄：残りの幅いっぱいに広げる。狭い画面では折り返して1行を使う */
+.search {
+  flex: 1 1 240px;
+}
+
+/* 件数の表示 */
+.count {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

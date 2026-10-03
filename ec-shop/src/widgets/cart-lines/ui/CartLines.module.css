@@ -1,0 +1,80 @@
+.list {
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+/*
+ * 1行を Grid で「絵文字・名前・数量・小計・削除」の5列にする。
+ * 名前の列（1fr）だけが伸び縮みする
+ */
+.line {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+
+.line + .line {
+  border-top: 1px solid var(--color-border);
+}
+
+/*
+ * 狭い画面では2段にする。grid-template-areas で「どこに何を置くか」を名前で指定する
+ *   ┌絵┬名前───────┬削除┐
+ *   └絵┴数量──┬小計──┴───┘
+ */
+@media (width < 560px) {
+  .line {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "emoji info   remove"
+      "emoji stepper subtotal";
+  }
+  .emoji {
+    grid-area: emoji;
+  }
+  .info {
+    grid-area: info;
+  }
+  .stepper {
+    grid-area: stepper;
+  }
+  .subtotal {
+    grid-area: subtotal;
+  }
+  .remove {
+    grid-area: remove;
+  }
+}
+
+.emoji {
+  font-size: 32px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Grid の中で長い名前があっても、はみ出さずに折り返す */
+}
+
+.name {
+  color: inherit;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.unitPrice {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.subtotal {
+  min-width: 5em;
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

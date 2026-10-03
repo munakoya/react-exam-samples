@@ -1,0 +1,68 @@
+/*
+ * 表が枠より広いときだけ、この中で横スクロールする。
+ * position: relative は、中の .visually-hidden（position: absolute）が枠の外へはみ出さないようにするため
+ */
+.scroll {
+  position: relative;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+.scroll:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* 隣り合うセルの線を1本にまとめる */
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: middle;
+  /* セル内で折り返さない。狭い画面では列を縮めずに、枠の中で横スクロールさせる */
+  white-space: nowrap;
+}
+
+/* 見出し行 */
+.table thead th {
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 行の見出し（名前の列など） */
+.table tbody th {
+  font-weight: 600;
+}
+
+/* 行と行の間の線 */
+.table tbody tr {
+  border-top: 1px solid var(--color-border);
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-surface);
+}
+
+/* 列ごとのそろえ方（TSX の data-align と連動） */
+.table [data-align="center"] {
+  text-align: center;
+}
+.table [data-align="right"] {
+  text-align: right;
+  font-variant-numeric: tabular-nums; /* 数字の桁をそろえる */
+}
+
+.empty {
+  padding: var(--space-6) !important;
+  color: var(--color-text-muted);
+  text-align: center !important;
+}

@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* 項目名と金額を右寄せの2列で並べる */
+.totals {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end; /* グリッド全体を右に寄せる */
+  gap: var(--space-1) var(--space-5);
+}
+
+.totals dd {
+  text-align: right;
+  font-variant-numeric: tabular-nums; /* 数字の幅をそろえて、桁を縦にそろえる */
+}
+
+.total {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}

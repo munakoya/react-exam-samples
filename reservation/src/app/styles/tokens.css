@@ -1,0 +1,60 @@
+/*
+ * デザイントークン（見た目の共通の値）
+ *
+ * 色・余白・角丸などを CSS 変数にまとめ、各 *.module.css から var(--名前) で使う。
+ *   .button { padding: var(--space-2) var(--space-4); color: var(--color-primary); }
+ *
+ * ここを変えれば、アプリ全体の見た目がまとめて変わる。
+ * 新しい値をその場で作らず、ここにある値だけで組み立てると見た目がそろう。
+ */
+:root {
+  /* ---------- 色 ---------- */
+  --color-primary: #4f46e5; /* メイン（ボタン・リンク・選択中） */
+  --color-primary-hover: #4338ca;
+  --color-danger: #dc2626; /* 削除・エラー */
+  --color-success: #16a34a; /* 完了・成功 */
+  --color-warning: #d97706; /* 注意 */
+
+  --color-bg: #ffffff; /* カード・入力欄の背景 */
+  --color-surface: #f8f9fb; /* ページの背景・ホバー */
+  --color-border: #e2e4e9; /* 枠線・区切り線 */
+  --color-text: #1a1a1a; /* 本文 */
+  --color-text-muted: #6b7280; /* 補足・日付など */
+
+  /* ---------- 余白（4px 刻み） ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ---------- 角丸 ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px; /* ボタン・入力欄 */
+  --radius-lg: 12px; /* カード・モーダル */
+  --radius-full: 999px; /* バッジ（両端が丸い） */
+
+  /* ---------- 文字 ---------- */
+  --font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Meiryo", sans-serif;
+  --font-size-sm: 12px; /* 補足・エラー文 */
+  --font-size-base: 14px; /* 本文 */
+  --font-size-lg: 16px; /* 小見出し */
+  --font-size-xl: 20px; /* セクションの見出し */
+  --font-size-2xl: 24px; /* ページの見出し */
+  --line-height: 1.6;
+
+  /* ---------- 影 ---------- */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06); /* カード */
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.16); /* モーダル */
+
+  /* ---------- レイアウト ---------- */
+  --container-sm: 640px; /* フォーム・Todo など1列の画面 */
+  --container-md: 960px; /* 一般的な画面 */
+  --container-lg: 1200px; /* 表・ダッシュボード */
+
+  /* ---------- 操作 ---------- */
+  --focus-ring: 0 0 0 3px rgb(79 70 229 / 0.35); /* キーボード操作時の枠線 */
+  --transition: 0.15s ease; /* ホバーなどの色の変化 */
+}

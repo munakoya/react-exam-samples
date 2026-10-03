@@ -1,0 +1,41 @@
+/* 画像（左）と情報（右）の2列。狭い画面では縦に並べる */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (width < 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1; /* 正方形 */
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  font-size: 120px;
+}
+
+.category {
+  color: var(--color-text-muted);
+}
+
+.name {
+  font-size: var(--font-size-2xl);
+}
+
+.price {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.stock {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

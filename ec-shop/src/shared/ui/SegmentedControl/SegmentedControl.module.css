@@ -1,0 +1,38 @@
+/* ボタンを1つの枠でつなげる */
+.group {
+  display: inline-flex;
+  overflow: hidden; /* 角丸からはみ出す背景を切る */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+.segment {
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* ボタンの間に区切り線（先頭のボタンには付けない） */
+.segment + .segment {
+  border-left: 1px solid var(--color-border);
+}
+
+.segment:hover {
+  background-color: var(--color-surface);
+}
+
+.segment:focus-visible {
+  outline: none;
+  box-shadow: inset var(--focus-ring);
+}
+
+/* 選ばれているボタン（TSX の aria-pressed と連動） */
+.segment[aria-pressed="true"] {
+  background-color: color-mix(in srgb, var(--color-primary) 12%, white);
+  color: var(--color-primary);
+  font-weight: 600;
+}

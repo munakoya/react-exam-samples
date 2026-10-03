@@ -1,0 +1,154 @@
+# React 試験対策サンプル集
+
+> 試験に出そうなお題を、同じ技術・同じ設計で作った**参考プロジェクト**。
+> まず自分で作ってみて、あとでサンプルと見比べる（答え合わせ）ための教材。
+
+| 項目           | 使っているもの                                                               |
+| -------------- | ---------------------------------------------------------------------------- |
+| 構成           | FSD（`app / pages / widgets / features / entities / shared`）                |
+| 状態管理・保存 | Zustand ＋ `persist` ミドルウェア（localStorage に自動で保存・読み込み）     |
+| フォーム       | React Hook Form ＋ zod（`@hookform/resolvers`）                              |
+| ルーティング   | React Router（`BrowserRouter` ＋ `<Routes>`）                                |
+| 見た目         | `global.css`・`tokens.css`・CSS Modules、部品は各サンプルの `src/shared/ui/` |
+
+## お題一覧
+
+| お題                   | フォルダ                      | 状態   | このサンプルで学べること                                                                                  |
+| ---------------------- | ----------------------------- | ------ | --------------------------------------------------------------------------------------------------------- |
+| タスク管理             | [task-manager](task-manager/) | 作成済 | モーダルで追加・編集（`reset`）、並び替え、日付の比較、表示設定の store、かんばんボード                   |
+| 在庫管理               | [inventory](inventory/)       | 作成済 | ページで登録・編集・詳細、URL で絞り込み、入出庫（在庫数に応じたチェック）、2つの store を動かす features |
+| EC                     | [ec-shop](ec-shop/)           | 作成済 | 商品マスタ、カート（合計の計算）、購入フォーム（メール・電話・郵便番号）、注文の確定、ページのガード      |
+| 予約・スケジュール管理 | [reservation](reservation/)   | 作成済 | 時間の重なりチェック、定員チェック（`superRefine`）、CSS Grid のスケジュール表、URL から初期値            |
+| ユーザ管理             |                               | 未作成 |                                                                                                           |
+| アルバム               |                               | 未作成 |                                                                                                           |
+| 注文管理               |                               | 未作成 |                                                                                                           |
+| 受講管理               |                               | 未作成 |                                                                                                           |
+| 掲示板                 |                               | 未作成 |                                                                                                           |
+| 蔵書管理               |                               | 未作成 |                                                                                                           |
+| 家計簿                 |                               | 未作成 |                                                                                                           |
+
+各サンプルの README は **お題 → 要件 → 実装の順番 → 解答の構成 → 学習ポイント** の順に書いてある。
+
+## 学び方（答え合わせの流れ）
+
+1. サンプルの README の **お題と要件だけ** を読む（コードはまだ見ない）
+2. 自分で新しいプロジェクトを作って実装する（時間を計る。目安は 2〜3 時間）
+3. サンプルを動かして、足りない機能・動きの違いを探す
+4. コードを見比べる。特に次の点
+   - そのコードを置いた**層**（entities / features / widgets / pages）は同じか
+   - store に入れたもの・入れなかったものは同じか（計算できる値を保存していないか）
+   - zod のチェックの書き方（`refine`・`superRefine`・`pipe`）
+   - 空・エラー・見つからないときの表示があるか
+5. 違うところを直して、もう一度作る
+
+## 動かし方
+
+`samples/` で1回 `npm install` すると、全サンプルの依存がまとめて入る（npm workspaces）。
+
+```bash
+cd frontend/exam/samples
+npm install
+
+npm run dev -w task-manager   # http://localhost:5173
+npm run dev -w inventory
+npm run dev -w ec-shop
+npm run dev -w reservation
+
+npm run build                 # 全サンプルの型チェック ＋ ビルド
+npm run lint                  # 全サンプルの lint
+```
+
+どのサンプルも `package.json` を持っているので、フォルダごと取り出して `npm install` すれば単独でも動く。
+
+localStorage のキーはサンプルごとに `task-manager:tasks` のように分けてあるので、同じ `localhost:5173` で動かしてもデータは混ざらない。
+データを消したいときは DevTools の **Application → Local Storage** から削除する。
+
+## 共通の作り
+
+どのサンプルも同じ土台の上に作っているので、1つ読めばほかも読みやすい。
+
+```text
+src/
+├── main.tsx                       # 起点。global.css を読み込む
+├── app/
+│   ├── App.tsx                    # URL とページの対応（<Routes>）
+│   ├── layouts/RootLayout.tsx     # 全ページ共通の枠（AppShell ＋ <Outlet />）
+│   ├── providers/AppProviders.tsx # BrowserRouter（useTransitions={false}）・ToastProvider
+│   └── styles/                    # global.css・tokens.css
+├── pages/                         # URL 1つ分の画面
+├── widgets/                       # entities と features を組み合わせた大きめの UI
+├── features/                      # ユーザーの操作（フォーム・削除ボタンなど）
+├── entities/                      # 扱う「もの」の型（zod）・store（Zustand）・表示
+└── shared/
+    ├── ui/                        # UI 部品（Button・TextField・Table・Modal など）
+    ├── lib/                       # 日付・金額の整形、persist の読み込みチェック（mergeWithSchema）
+    └── config/                    # localStorage のキー
+```
+
+### 守っているルール
+
+- import は**下の層だけ**：`app → pages → widgets → features → entities → shared`
+- 同じ層の別のフォルダは import しない（`entities/cart` から `entities/product` は NG）。両方を使う処理は上の層（features・widgets）に書く
+- 外からは各フォルダの `index.ts` 経由で読み込む
+- store には「保存する値」だけを入れる。合計・件数・絞り込み結果などの**計算できる値は入れない**
+- Zustand のセレクターの中で `filter`・`map` した配列を返さない（毎回新しい配列になり、無限に再描画される）
+
+### Zustand の store の型
+
+```ts
+export const useXxxStore = create<XxxStore>()(
+  persist(
+    (set) => ({
+      items: [],
+      addItem: (input) =>
+        set((state) => ({ items: [...state.items, { ...input, id: crypto.randomUUID() }] })),
+    }),
+    {
+      name: storageKey("items"), // localStorage のキー
+      partialize: (state) => ({ items: state.items }), // 保存する値だけ
+      merge: mergeWithSchema(z.object({ items: z.array(itemSchema) })), // 読み込んだ値を zod でチェック
+    },
+  ),
+);
+```
+
+## GitHub で提出するときのコミットの流れ
+
+実装の順番（コミット履歴）も見られる前提で、**動く状態を保ったまま、1機能ずつコミット**する。各サンプルの README の「実装の順番」がそのままコミットの単位になる。
+
+```text
+1. 環境構築（Vite・パッケージ・パスエイリアス・tokens.css / global.css・shared/ui）
+2. ルーティングと共通レイアウト（空のページ）
+3. 型と store（entities）
+4. 一覧の表示
+5. 登録フォーム
+6. 詳細・編集
+7. 削除（確認ダイアログ）
+8. 絞り込み・並び替え
+9. 空・エラー・見つからないときの表示、レスポンシブの調整
+10. README（動かし方・工夫した点）
+```
+
+コミットメッセージは「何をしたか」が分かる日本語でよい（例：`タスクの追加フォームを実装`）。
+
+## UI 部品を直すとき
+
+部品の元は [_shared/ui](_shared/ui/) にあり、各サンプルの `src/shared/ui` はそのコピー。
+部品を直すときは `_shared/ui` を直してから、次で全サンプルへ反映する。
+
+```bash
+npm run sync-ui
+```
+
+## サンプルを増やすとき
+
+1. 既存のサンプル（例：`inventory`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
+2. `entities`・`features`・`widgets`・`pages` をお題に合わせて作り直す
+3. [package.json](package.json) の `workspaces` にフォルダ名を足す
+4. この README のお題一覧を更新する
+
+## 関連
+
+- [React Sample App](../react-sample-app/README.md) … 部品のドキュメント（`/ui`）、MUI 版のサンプル
+- [Zustand](../../libraries/zustand.md)・[React Hook Form](../../libraries/react-hook-form.md)・[zod](../../libraries/zod.md)・[React Router](../../libraries/react-router.md)
+- [FSD](../../architecture/fsd.md)

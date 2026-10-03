@@ -1,0 +1,35 @@
+/*
+ * <dialog> 自体には padding を付けない。
+ * 付けると、その余白のクリックも「背景のクリック」と判定されて閉じてしまう
+ */
+.dialog {
+  width: min(480px, calc(100% - var(--space-6))); /* 480px か、画面幅 − 32px の小さい方 */
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text);
+}
+
+/* showModal() で開いたときの背景 */
+.dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.4);
+}
+
+/* 中身の余白はこちらに付ける */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}

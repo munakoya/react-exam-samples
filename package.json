@@ -1,0 +1,15 @@
+{
+  "name": "exam-samples",
+  "private": true,
+  "workspaces": [
+    "task-manager",
+    "inventory",
+    "ec-shop",
+    "reservation"
+  ],
+  "scripts": {
+    "sync-ui": "node scripts/sync-ui.mjs",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  }
+}

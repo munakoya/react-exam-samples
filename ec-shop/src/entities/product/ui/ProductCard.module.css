@@ -1,0 +1,85 @@
+/*
+ * カードは縦に「画像・本文・ボタン」。
+ * 本文を flex: 1 で伸ばすと、Grid で並べたときにボタンの位置がカード同士でそろう
+ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/*
+ * カード全体をクリックできるようにする（stretched link）。
+ * 商品名のリンクの ::after をカード全体に広げる。ボタンは z-index で上に出して押せるようにする
+ */
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+/* 売り切れは画像を灰色にする */
+.card[data-sold-out="true"] .image {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.image {
+  display: grid;
+  place-items: center; /* 縦横の中央に置く */
+  aspect-ratio: 4 / 3; /* 幅に合わせて高さを決める（画像の枠の比率） */
+  background-color: var(--color-surface);
+  font-size: 56px;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+}
+
+.category {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.name {
+  font-size: var(--font-size-lg);
+}
+
+.price {
+  font-weight: 700;
+}
+
+.actions {
+  position: relative;
+  z-index: 1; /* カード全体のリンクより上に出して、ボタンを押せるようにする */
+  padding: 0 var(--space-4) var(--space-4);
+}

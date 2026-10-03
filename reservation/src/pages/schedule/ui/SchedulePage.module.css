@@ -1,0 +1,16 @@
+.datePicker {
+  width: 180px;
+}
+
+.dateTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--font-size-xl);
+}
+
+.count {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  font-weight: normal;
+}

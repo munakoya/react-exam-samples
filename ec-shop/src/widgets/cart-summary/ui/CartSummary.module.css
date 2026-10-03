@@ -1,0 +1,29 @@
+/*
+ * 項目名（左）と金額（右）の2列。
+ * 列の間隔（column-gap）は 0 にして、金額の左の padding で空ける（合計の上の線が途切れないように）
+ */
+.totals {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: var(--space-2);
+}
+
+.totals dd {
+  padding-left: var(--space-4);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 合計の行は上に線を引いて大きくする */
+.total {
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.note {
+  margin-top: var(--space-3);
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+}

@@ -1,0 +1,59 @@
+/*
+ * 3列を同じ幅で並べる。
+ * minmax(0, 1fr)：中身が長くても列が広がらず、3等分を保つ（1fr だけだと長い単語で列が広がる）
+ */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start; /* 列の高さを中身に合わせる（一番長い列にそろえない） */
+}
+
+/* 狭い画面では縦に1列 */
+@media (width < 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background-color: color-mix(in srgb, var(--color-border) 45%, var(--color-surface));
+}
+
+.columnTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-base);
+}
+
+/* 件数を丸で囲む */
+.count {
+  min-width: 1.6em;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.empty {
+  padding: var(--space-4) 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}

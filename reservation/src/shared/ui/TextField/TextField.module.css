@@ -1,0 +1,38 @@
+/* ラベル・入力欄・メッセージを縦に並べる */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* TSX の aria-invalid と連動して、エラー時に赤枠にする */
+.input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.message {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.message[data-error="true"] {
+  color: var(--color-danger);
+}

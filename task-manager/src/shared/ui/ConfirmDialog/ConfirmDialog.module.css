@@ -1,0 +1,5 @@
+/* 長い名前でも枠からはみ出さないように折り返す */
+.message {
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}

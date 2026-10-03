@@ -1,0 +1,51 @@
+.accordion {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+/* 項目と項目の間にだけ線を引く */
+.item + .item {
+  border-top: 1px solid var(--color-border);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  list-style: none; /* ブラウザ標準の ▶ を消す */
+  cursor: pointer;
+}
+
+/* Safari 用：標準の ▶ を消す */
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 右端の ＋ / − の印。開いているかは [open] 属性で分かる */
+.summary::after {
+  content: "＋";
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+.item[open] > .summary::after {
+  content: "−";
+}
+
+.summary:hover {
+  background-color: var(--color-surface);
+}
+
+.summary:focus-visible {
+  outline: none;
+  box-shadow: inset var(--focus-ring);
+}
+
+.content {
+  padding: 0 var(--space-4) var(--space-4);
+  color: var(--color-text-muted);
+}

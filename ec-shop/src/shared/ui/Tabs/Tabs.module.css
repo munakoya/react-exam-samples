@@ -1,0 +1,39 @@
+/* タブを横に並べ、下に区切り線を引く。タブが多いときは横スクロールする */
+.tabList {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tab {
+  /* 下線の分だけ下にずらし、区切り線と重ねる */
+  margin-bottom: -1px;
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: inset var(--focus-ring);
+}
+
+/* 選ばれているタブ（TSX の aria-selected と連動） */
+.tab[aria-selected="true"] {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.panel {
+  padding-top: var(--space-4);
+}

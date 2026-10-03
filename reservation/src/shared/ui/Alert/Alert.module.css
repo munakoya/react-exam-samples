@@ -1,0 +1,47 @@
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid;
+  border-left-width: 4px; /* 左の線を太くして、色だけでなく形でも目立たせる */
+  border-radius: var(--radius-md);
+}
+
+/* 本文を伸ばして、× ボタンを右端へ押し出す */
+.body {
+  flex: 1;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.close {
+  padding: 0 var(--space-1);
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* 色の種類（TSX の data-tone と連動）。背景は color-mix で枠線の色を薄くして作る */
+.alert[data-tone="info"] {
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 8%, white);
+}
+.alert[data-tone="success"] {
+  border-color: var(--color-success);
+  background-color: color-mix(in srgb, var(--color-success) 8%, white);
+}
+.alert[data-tone="error"] {
+  border-color: var(--color-danger);
+  background-color: color-mix(in srgb, var(--color-danger) 8%, white);
+}
