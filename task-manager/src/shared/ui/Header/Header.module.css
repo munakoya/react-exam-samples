@@ -1,0 +1,56 @@
+.header {
+  position: sticky; /* スクロールしても上に残す */
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 56px;
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+}
+
+.title {
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* 右側の要素を右端へ押し出す */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.menuButton {
+  display: none; /* 広い幅では出さない */
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background-color: var(--color-surface);
+}
+
+.menuButton:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* AppShell の幅が 768px 未満のときだけ ☰ を出す（AppShell.module.css の container の名前） */
+@container app-shell (max-width: 767px) {
+  .menuButton {
+    display: inline-grid;
+    place-items: center;
+  }
+}

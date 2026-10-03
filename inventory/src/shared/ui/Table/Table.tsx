@@ -12,6 +12,7 @@ import styles from "./Table.module.css";
  *   const columns: TableColumn<Item>[] = [
  *     { key: "name", header: "商品名", render: (item) => item.name, rowHeader: true },
  *     { key: "price", header: "価格", render: (item) => `¥${item.price}`, align: "right" },
+ *     { key: "memo", header: "メモ", render: (item) => item.memo, wrap: true },   … 長い文章は折り返す
  *     { key: "actions", header: "操作", render: (item) => <Button size="sm">編集</Button> },
  *   ];
  *
@@ -27,6 +28,8 @@ export type TableColumn<T> = {
   align?: "left" | "center" | "right";
   /** true ならこの列のセルを「行の見出し」（<th scope="row">）にする。名前の列などに使う */
   rowHeader?: boolean;
+  /** true なら、この列だけ文字を折り返す（説明・メモなど長い文章の列）。初期値は折り返さない */
+  wrap?: boolean;
 };
 
 // <T>：rows の型（Item など）が、columns の render の引数の型として使われる
@@ -75,11 +78,16 @@ export const Table = <T,>({
               <tr key={getRowKey(row)}>
                 {columns.map((column) =>
                   column.rowHeader ? (
-                    <th key={column.key} scope="row" data-align={column.align}>
+                    <th
+                      key={column.key}
+                      scope="row"
+                      data-align={column.align}
+                      data-wrap={column.wrap}
+                    >
                       {column.render(row)}
                     </th>
                   ) : (
-                    <td key={column.key} data-align={column.align}>
+                    <td key={column.key} data-align={column.align} data-wrap={column.wrap}>
                       {column.render(row)}
                     </td>
                   ),

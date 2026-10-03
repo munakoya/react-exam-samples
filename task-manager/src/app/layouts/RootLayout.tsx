@@ -1,20 +1,34 @@
+import { useState } from "react";
 import { Outlet } from "react-router";
-import { AppShell, type AppShellNavItem } from "@/shared/ui";
+import { AppShell, Header, Sidebar, type SidebarNavItem } from "@/shared/ui";
 
 /**
- * 全ページ共通の枠（ヘッダー ＋ サイドメニュー） ── app/layouts
+ * 全ページ共通の枠（ヘッダー ＋ サイドバー） ── app/layouts
  *
  * App.tsx のレイアウトルートに使い、子のページを <Outlet /> の位置に表示する。
  */
 
-const navItems: AppShellNavItem[] = [
+const navItems: SidebarNavItem[] = [
   { to: "/tasks", label: "タスク一覧" },
   { to: "/board", label: "ボード" },
 ];
 
 export const RootLayout = () => {
+  // ☰ で開閉するメニューの状態。Header と Sidebar の両方で使うので、ここで持つ
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <AppShell title="タスク管理" navItems={navItems}>
+    <AppShell
+      header={
+        <Header
+          title="タスク管理"
+          homeTo="/"
+          menuOpen={menuOpen}
+          onMenuClick={() => setMenuOpen((prev) => !prev)}
+        />
+      }
+      sidebar={<Sidebar navItems={navItems} open={menuOpen} onClose={() => setMenuOpen(false)} />}
+    >
       <Outlet />
     </AppShell>
   );

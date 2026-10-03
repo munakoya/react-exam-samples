@@ -1,0 +1,38 @@
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  height: 100%; /* Grid で並べたとき、高さをそろえる */
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+.label {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums; /* 数字の幅をそろえる */
+}
+
+.note {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* tone で数字と枠の色を変える（TSX の data-tone と連動） */
+.stat[data-tone="danger"] {
+  border-color: var(--color-danger);
+}
+.stat[data-tone="danger"] .value {
+  color: var(--color-danger);
+}
+
+.stat[data-tone="success"] .value {
+  color: var(--color-success);
+}

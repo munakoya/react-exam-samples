@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import {
   getStockStatus,
   itemCategories,
@@ -8,7 +8,7 @@ import {
   type ItemCategory,
 } from "@/entities/item";
 import {
-  Button,
+  ButtonLink,
   Container,
   EmptyState,
   PageHeader,
@@ -27,8 +27,8 @@ import styles from "./ItemListPage.module.css";
  * 細かい処理は下の層に任せる。
  *
  * このページで使っている React Router の機能:
- *   - useNavigate      … ボタンのクリックでページを移動する
- *   - useSearchParams  … URL の ?category=food&low=1 を読み書きする（絞り込みを URL に残す）
+ *   - ButtonLink（中身は Link） … ボタンの見た目でページを移動する
+ *   - useSearchParams           … URL の ?category=food&low=1 を読み書きする（絞り込みを URL に残す）
  */
 
 // 絞り込みの選択肢：「すべて」＋ 各カテゴリ
@@ -44,8 +44,6 @@ const parseCategory = (value: string | null): CategoryFilter =>
   itemCategories.find((category) => category === value) ?? "all";
 
 export const ItemListPage = () => {
-  const navigate = useNavigate();
-
   // store から一覧を選ぶ。絞り込みはセレクターの中ではなく、下で行う（itemStore.ts の注意を参照）
   const items = useItemStore((state) => state.items);
 
@@ -101,7 +99,7 @@ export const ItemListPage = () => {
               ? `要発注（在庫少・在庫切れ）の商品が ${lowCount}件 あります`
               : "登録したデータはブラウザ（localStorage）に保存されます"
           }
-          action={<Button onClick={() => navigate("/items/new")}>新規登録</Button>}
+          action={<ButtonLink to="/items/new">新規登録</ButtonLink>}
         />
 
         {items.length === 0 ? (
@@ -109,7 +107,7 @@ export const ItemListPage = () => {
           <EmptyState
             title="まだ商品がありません"
             description="「新規登録」から追加してください。"
-            action={<Button onClick={() => navigate("/items/new")}>新規登録</Button>}
+            action={<ButtonLink to="/items/new">新規登録</ButtonLink>}
           />
         ) : (
           <>

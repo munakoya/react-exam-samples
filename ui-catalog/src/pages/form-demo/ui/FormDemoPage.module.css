@@ -1,0 +1,7 @@
+.json {
+  margin: 0;
+  overflow-x: auto;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}

@@ -3,15 +3,24 @@ import { DeleteDoneTasksButton } from "@/features/delete-task";
 import { filterTasks, TaskFilterBar, useTaskFilterStore } from "@/features/task-filter";
 import { TaskFormModal, useTaskFormModal } from "@/features/task-form";
 import { todayString } from "@/shared/lib";
-import { Button, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
+import {
+  Button,
+  Container,
+  EmptyState,
+  Grid,
+  PageHeader,
+  ProgressBar,
+  Stack,
+  Stat,
+} from "@/shared/ui";
 import { TaskList } from "@/widgets/task-list";
-import styles from "./TaskListPage.module.css";
 
 /**
  * タスク一覧ページ（/tasks） ── pages/task-list/ui
  *
  *   ┌ タスク一覧              [＋ 追加] ┐
- *   │ 未着手 2 / 進行中 1 / 完了 3 / 期限切れ 1 │ ← 集計
+ *   │ 未着手 2 / 進行中 1 / 完了 3 / 期限切れ 1 │ ← 集計（Stat）
+ *   │ 完了率 ██████░░░░ 50%            │ ← 進み具合（ProgressBar）
  *   │ [すべて|未着手|進行中|完了]  [並び順▼] │ ← 絞り込み・並び替え（features/task-filter）
  *   │ ┌カード┐                           │
  *   │ └────┘ …                        │ ← 一覧（widgets/task-list）
@@ -49,20 +58,23 @@ export const TaskListPage = () => {
           />
         ) : (
           <>
-            {/* ----- 集計 ----- */}
-            {/* 項目名と値の組なので <dl>。CSS で横並びにする */}
-            <dl className={styles.summary}>
+            {/* ----- 集計（1つ 120px 以上で、入るだけ横に並べる） ----- */}
+            <Grid min={120} gap={3}>
               {taskStatuses.map((s) => (
-                <div key={s} className={styles.summaryItem}>
-                  <dt>{taskStatusLabels[s]}</dt>
-                  <dd>{countByStatus[s]}</dd>
-                </div>
+                <Stat key={s} label={taskStatusLabels[s]} value={countByStatus[s]} />
               ))}
-              <div className={styles.summaryItem} data-alert={overdueCount > 0}>
-                <dt>期限切れ</dt>
-                <dd>{overdueCount}</dd>
-              </div>
-            </dl>
+              <Stat
+                label="期限切れ"
+                value={overdueCount}
+                tone={overdueCount > 0 ? "danger" : "neutral"}
+              />
+            </Grid>
+            <ProgressBar
+              label="完了率"
+              value={countByStatus.done}
+              max={tasks.length}
+              tone="success"
+            />
 
             <TaskFilterBar />
 

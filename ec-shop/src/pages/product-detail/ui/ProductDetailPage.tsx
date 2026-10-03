@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import { findProduct, productCategoryLabels } from "@/entities/product";
 import { AddToCartForm } from "@/features/add-to-cart";
-import { Button, Container, EmptyState, Stack } from "@/shared/ui";
+import { Button, ButtonLink, Container, EmptyState, Stack } from "@/shared/ui";
 import { formatPrice } from "@/shared/lib";
 import styles from "./ProductDetailPage.module.css";
 
@@ -19,7 +19,7 @@ export const ProductDetailPage = () => {
       <Container size="sm">
         <EmptyState
           title="商品が見つかりません"
-          action={<Button onClick={() => navigate("/products")}>商品一覧へ</Button>}
+          action={<ButtonLink to="/products">商品一覧へ</ButtonLink>}
         />
       </Container>
     );

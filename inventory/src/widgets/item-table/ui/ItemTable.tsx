@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { itemCategoryLabels, ItemStockBadge, type Item } from "@/entities/item";
 import { AdjustStockButton } from "@/features/adjust-stock";
 import { DeleteItemButton } from "@/features/delete-item";
-import { Button, Stack, Table, type TableColumn } from "@/shared/ui";
+import { ButtonLink, Stack, Table, type TableColumn } from "@/shared/ui";
 import { formatDateTime } from "@/shared/lib";
 
 /**
@@ -22,9 +22,6 @@ type ItemTableProps = {
 };
 
 export const ItemTable = ({ items, emptyMessage }: ItemTableProps) => {
-  // ページの移動を JS から行う関数（ボタンのクリックで移動するときに使う）
-  const navigate = useNavigate();
-
   // 列の定義：見出し（header）と、1行分のデータからセルの中身を作る関数（render）
   const columns: TableColumn<Item>[] = [
     {
@@ -50,14 +47,15 @@ export const ItemTable = ({ items, emptyMessage }: ItemTableProps) => {
       render: (item) => (
         <Stack direction="row" gap={2}>
           <AdjustStockButton item={item} size="sm" />
-          <Button
+          {/* ページを移動するだけなので ButtonLink（リンク）。新しいタブでも開ける */}
+          <ButtonLink
+            to={`/items/${item.id}/edit`}
             variant="ghost"
             size="sm"
-            onClick={() => navigate(`/items/${item.id}/edit`)}
             aria-label={`「${item.name}」を編集`}
           >
             編集
-          </Button>
+          </ButtonLink>
           <DeleteItemButton item={item} size="sm" />
         </Stack>
       ),

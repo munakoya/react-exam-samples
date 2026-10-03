@@ -53,6 +53,7 @@ npm run dev -w task-manager   # http://localhost:5173
 npm run dev -w inventory
 npm run dev -w ec-shop
 npm run dev -w reservation
+npm run dev -w ui-catalog     # UI 部品のカタログ
 
 npm run build                 # 全サンプルの型チェック ＋ ビルド
 npm run lint                  # 全サンプルの lint
@@ -72,7 +73,7 @@ src/
 ├── main.tsx                       # 起点。global.css を読み込む
 ├── app/
 │   ├── App.tsx                    # URL とページの対応（<Routes>）
-│   ├── layouts/RootLayout.tsx     # 全ページ共通の枠（AppShell ＋ <Outlet />）
+│   ├── layouts/RootLayout.tsx     # 全ページ共通の枠（AppShell ＋ Header ＋ Sidebar ＋ <Outlet />）
 │   ├── providers/AppProviders.tsx # BrowserRouter（useTransitions={false}）・ToastProvider
 │   └── styles/                    # global.css・tokens.css
 ├── pages/                         # URL 1つ分の画面
@@ -131,9 +132,30 @@ export const useXxxStore = create<XxxStore>()(
 
 コミットメッセージは「何をしたか」が分かる日本語でよい（例：`タスクの追加フォームを実装`）。
 
+## UI 部品
+
+全サンプル共通の部品。見本・使う場面・使いそうなお題は **UI 部品カタログ**（[ui-catalog](ui-catalog/)、`npm run dev -w ui-catalog`）にまとめてある。
+
+| 分類           | 部品                                                                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| アプリの枠     | `AppShell`・`Header`・`Sidebar`                                                                                                                                          |
+| レイアウト     | `Container`・`Stack`・`Grid`・`PageHeader`                                                                                                                               |
+| ナビゲーション | `ButtonLink`・`Breadcrumb`・`Tabs`・`SegmentedControl`・`Pagination`                                                                                                     |
+| 入力           | `Button`・`IconButton`・`TextField`・`TextAreaField`・`SelectField`・`RadioGroup`・`Checkbox`・`CheckboxGroup`・`Switch`・`QuantityStepper`・`RatingField`・`ImageField` |
+| 表示           | `Card`・`Table`・`DescriptionList`・`Badge`・`Avatar`・`Rating`・`Stat`・`ProgressBar`・`Accordion`                                                                      |
+| フィードバック | `Alert`・`Toast`（`useToast`）・`EmptyState`・`Spinner`                                                                                                                  |
+| ダイアログ     | `Modal`・`ConfirmDialog`                                                                                                                                                 |
+
+React Hook Form とのつなぎ方は、カタログの「フォームの組み立て例」（`/form`）で全種類を確かめられる。
+
+- ほとんどの入力部品：`{...register("名前")}` をそのまま渡す
+- `CheckboxGroup`：選んだ値の配列で届く（`defaultValues` は `[]`）
+- `RatingField`：ラジオボタンなので文字列で届く → zod の `z.coerce.number()`
+- `ImageField`：値を親が持つ部品なので `Controller` でつなぐ
+
 ## UI 部品を直すとき
 
-部品の元は [_shared/ui](_shared/ui/) にあり、各サンプルの `src/shared/ui` はそのコピー。
+部品の元は [_shared/ui](_shared/ui/) にあり、各サンプル（とカタログ）の `src/shared/ui` はそのコピー。
 部品を直すときは `_shared/ui` を直してから、次で全サンプルへ反映する。
 
 ```bash

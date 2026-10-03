@@ -1,7 +1,7 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { compareByStart, useReservationStore } from "@/entities/reservation";
 import { addDays, formatDateWithWeekday, todayString } from "@/shared/lib";
-import { Alert, Button, Container, PageHeader, Stack, TextField } from "@/shared/ui";
+import { Alert, Button, ButtonLink, Container, PageHeader, Stack, TextField } from "@/shared/ui";
 import { DaySchedule } from "@/widgets/day-schedule";
 import styles from "./SchedulePage.module.css";
 
@@ -17,7 +17,6 @@ const isDateString = (value: string | null): value is string =>
   value !== null && /^\d{4}-\d{2}-\d{2}$/.test(value);
 
 export const SchedulePage = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const today = todayString();
   const dateParam = searchParams.get("date");
@@ -36,9 +35,7 @@ export const SchedulePage = () => {
         <PageHeader
           title="スケジュール"
           description="空いている枠をクリックすると、その時間で予約できます"
-          action={
-            <Button onClick={() => navigate(`/reservations/new?date=${date}`)}>＋ 新規予約</Button>
-          }
+          action={<ButtonLink to={`/reservations/new?date=${date}`}>＋ 新規予約</ButtonLink>}
         />
 
         {/* ----- 日付の切り替え ----- */}

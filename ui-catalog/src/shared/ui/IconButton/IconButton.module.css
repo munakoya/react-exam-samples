@@ -1,0 +1,58 @@
+/* 正方形のボタン。アイコンを中央に置く */
+.button {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-text-muted);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- 大きさ ---------- */
+.button[data-size="md"] {
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+}
+.button[data-size="sm"] {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+
+/* ---------- 種類 ---------- */
+.button[data-variant="ghost"]:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.button[data-variant="secondary"] {
+  border-color: var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+.button[data-variant="secondary"]:hover:not(:disabled) {
+  background-color: var(--color-surface);
+}
+
+.button[data-variant="danger"] {
+  color: var(--color-danger);
+}
+.button[data-variant="danger"]:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--color-danger) 10%, white);
+}

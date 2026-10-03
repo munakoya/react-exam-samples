@@ -29,6 +29,12 @@
   white-space: nowrap;
 }
 
+/* wrap: true の列だけは折り返す。折り返す列が細くなりすぎないように、最低幅も決める */
+.table [data-wrap="true"] {
+  min-width: 12em;
+  white-space: normal;
+}
+
 /* 見出し行 */
 .table thead th {
   background-color: var(--color-surface);

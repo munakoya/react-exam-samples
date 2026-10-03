@@ -1,0 +1,10 @@
+/*
+ * repeat(auto-fill, minmax(最小幅, 1fr))：
+ *   最小幅を確保できる数だけ列を作り、余った幅は均等に分ける。
+ * min(最小幅, 100%)：画面が最小幅より狭くても、はみ出さないようにする
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--grid-min), 100%), 1fr));
+  gap: var(--grid-gap);
+}

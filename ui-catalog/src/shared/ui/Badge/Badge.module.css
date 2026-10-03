@@ -1,0 +1,37 @@
+.badge {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full); /* 両端を丸くする */
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap; /* 幅が狭くても「在庫/切れ」のように途中で折り返さない */
+}
+
+/*
+ * 背景は color-mix でトークンの色を薄くして作る。
+ * 色ごとに「薄い色」のトークンを増やさずに済む
+ */
+.badge[data-tone="neutral"] {
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
+.badge[data-tone="success"] {
+  background-color: color-mix(in srgb, var(--color-success) 12%, white);
+  color: var(--color-success);
+}
+
+.badge[data-tone="info"] {
+  background-color: color-mix(in srgb, var(--color-primary) 12%, white);
+  color: var(--color-primary);
+}
+
+.badge[data-tone="warning"] {
+  background-color: color-mix(in srgb, var(--color-warning) 14%, white);
+  color: var(--color-warning);
+}
+
+.badge[data-tone="danger"] {
+  background-color: color-mix(in srgb, var(--color-danger) 12%, white);
+  color: var(--color-danger);
+}

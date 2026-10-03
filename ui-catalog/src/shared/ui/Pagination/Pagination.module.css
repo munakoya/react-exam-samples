@@ -1,0 +1,47 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--color-surface);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 今のページ（TSX の aria-current と連動） */
+.button[aria-current="page"] {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.ellipsis {
+  min-width: 24px;
+  color: var(--color-text-muted);
+  text-align: center;
+}

@@ -5,7 +5,8 @@
     "task-manager",
     "inventory",
     "ec-shop",
-    "reservation"
+    "reservation",
+    "ui-catalog"
   ],
   "scripts": {
     "sync-ui": "node scripts/sync-ui.mjs",

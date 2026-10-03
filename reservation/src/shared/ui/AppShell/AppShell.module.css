@@ -1,147 +1,25 @@
 /*
- * container-type: inline-size
- *   この要素の幅を、下の @container（コンテナクエリ）の基準にする。
+ * container: app-shell / inline-size
+ *   この要素の幅を、コンテナクエリの基準にして「app-shell」という名前を付ける。
+ *   Header・Sidebar の CSS は @container app-shell (max-width: 767px) で、狭いときの見た目に切り替える。
  *   画面の幅ではなく「この枠の幅」で切り替わるので、どこに置いても正しく動く
  */
 .shell {
-  position: relative;
   display: flex;
   flex-direction: column;
-  container-type: inline-size;
+  container: app-shell / inline-size;
   background-color: var(--color-surface);
 }
 
-/* ---------- ヘッダー ---------- */
-
-.header {
-  position: sticky; /* スクロールしても上に残す */
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  height: 56px;
-  padding: 0 var(--space-4);
-  border-bottom: 1px solid var(--color-border);
-  background-color: var(--color-bg);
-}
-
-.title {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-}
-
-/* 右側の要素を右端へ押し出す */
-.headerRight {
-  margin-left: auto;
-}
-
-.menuButton {
-  display: none; /* 広い幅では出さない */
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: none;
-  border-radius: var(--radius-md);
-  background: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.menuButton:hover {
-  background-color: var(--color-surface);
-}
-
-.menuButton:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
-/* ---------- メニューとメイン ---------- */
-
+/* サイドバーとメインを横に並べる。position: relative は、狭いときに重ねて出すメニューの基準 */
 .body {
   position: relative;
   display: flex;
   flex: 1;
 }
 
-.nav {
-  flex-shrink: 0;
-  width: 220px;
-  padding: var(--space-3);
-  border-right: 1px solid var(--color-border);
-  background-color: var(--color-bg);
-}
-
-.navList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: 0;
-  list-style: none;
-}
-
-.navLink {
-  display: block;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.navLink:hover {
-  background-color: var(--color-surface);
-}
-
-.navLink:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
-/* 今のページ。NavLink が付ける "active" クラスは CSS Modules の外の名前なので :global() で指定する */
-.navLink:global(.active) {
-  background-color: color-mix(in srgb, var(--color-primary) 12%, white);
-  color: var(--color-primary);
-  font-weight: 600;
-}
-
 /* flex の子は中身より狭くならないのが初期設定。min-width: 0 で横にはみ出さないようにする */
 .main {
   flex: 1;
   min-width: 0;
-}
-
-.backdrop {
-  display: none;
-}
-
-/* ---------- 狭い幅（枠が 768px 未満） ---------- */
-@container (max-width: 767px) {
-  .menuButton {
-    display: inline-grid;
-    place-items: center;
-  }
-
-  /* メニューは閉じている間は隠し、開いたらメインの上に重ねる */
-  .nav {
-    display: none;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 15;
-    box-shadow: var(--shadow-lg);
-  }
-
-  .shell[data-menu-open="true"] .nav {
-    display: block;
-  }
-
-  .shell[data-menu-open="true"] .backdrop {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    background-color: rgb(0 0 0 / 0.3);
-  }
 }

@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router";
 import { useCartStore } from "@/entities/cart";
-import { Button, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
+import { ButtonLink, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
 import { CartLines } from "@/widgets/cart-lines";
 import { CartSummary } from "@/widgets/cart-summary";
 import styles from "./CartPage.module.css";
@@ -13,7 +12,6 @@ import styles from "./CartPage.module.css";
  *   └──────────────────┘└────────────┘
  */
 export const CartPage = () => {
-  const navigate = useNavigate();
   // 0件かどうかだけ分かればよいので、件数（数値）を選ぶ
   const lineCount = useCartStore((state) => state.lines.length);
 
@@ -25,7 +23,7 @@ export const CartPage = () => {
         {lineCount === 0 ? (
           <EmptyState
             title="カートは空です"
-            action={<Button onClick={() => navigate("/products")}>買い物を続ける</Button>}
+            action={<ButtonLink to="/products">買い物を続ける</ButtonLink>}
           />
         ) : (
           <div className={styles.layout}>
@@ -34,9 +32,9 @@ export const CartPage = () => {
             <div className={styles.summary}>
               <CartSummary
                 action={
-                  <Button fullWidth onClick={() => navigate("/checkout")}>
+                  <ButtonLink to="/checkout" fullWidth>
                     購入手続きへ
-                  </Button>
+                  </ButtonLink>
                 }
               />
             </div>

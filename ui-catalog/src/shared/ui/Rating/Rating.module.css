@@ -1,0 +1,65 @@
+/* ---------- 表示用 ---------- */
+
+.display {
+  display: inline-flex;
+  letter-spacing: 1px;
+}
+
+.filled {
+  color: var(--color-warning);
+}
+
+.empty {
+  color: var(--color-border);
+}
+
+/* ---------- 入力用 ---------- */
+
+.fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.legend {
+  margin-bottom: var(--space-1);
+  padding: 0;
+  font-weight: 600;
+}
+
+/*
+ * HTML では 5 → 1 の順に並んでいるので、row-reverse で 1 → 5 の順に見せる。
+ * justify-content: flex-end で、左に寄せる（row-reverse では flex-end が左になる）
+ */
+.stars {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.star {
+  padding: 0 2px;
+  color: var(--color-border);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+/* 選ばれた星と、HTML でそれより後ろ（見た目では左）の星をすべて色付きにする */
+.input:checked ~ .star {
+  color: var(--color-warning);
+}
+
+/* キーボード（← →）で選んでいる星に枠線を出す */
+.input:focus-visible + .star {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--focus-ring);
+}
+
+.error {
+  margin-top: var(--space-1);
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+}

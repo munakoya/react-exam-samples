@@ -7,6 +7,7 @@
   border-radius: var(--radius-md);
   font-weight: 600;
   white-space: nowrap;
+  text-decoration: none; /* ButtonLink（<a>）で使ったときに下線を出さない */
   cursor: pointer;
   transition:
     background-color var(--transition),

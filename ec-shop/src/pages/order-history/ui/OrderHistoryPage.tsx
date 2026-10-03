@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router";
 import { OrderLinesTable, paymentMethodLabels, useOrderStore } from "@/entities/order";
-import { Accordion, Button, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
+import { Accordion, ButtonLink, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
 import { formatDateTime, formatPrice } from "@/shared/lib";
 
 /**
@@ -9,7 +8,6 @@ import { formatDateTime, formatPrice } from "@/shared/lib";
  * 注文ごとに Accordion（開閉）にして、見出しに「番号・日時・合計」、中に明細を出す。
  */
 export const OrderHistoryPage = () => {
-  const navigate = useNavigate();
   const orders = useOrderStore((state) => state.orders);
 
   return (
@@ -19,7 +17,7 @@ export const OrderHistoryPage = () => {
         {orders.length === 0 ? (
           <EmptyState
             title="まだ注文はありません"
-            action={<Button onClick={() => navigate("/products")}>商品を見る</Button>}
+            action={<ButtonLink to="/products">商品を見る</ButtonLink>}
           />
         ) : (
           <Accordion

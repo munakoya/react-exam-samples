@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-sm);
+}
+
+/* 2つ目から前に区切りの「›」を付ける（HTML には書かない飾り） */
+.item + .item::before {
+  content: "›";
+  margin: 0 var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.current {
+  color: var(--color-text-muted);
+}

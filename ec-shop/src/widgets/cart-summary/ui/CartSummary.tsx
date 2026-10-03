@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { calcCartTotals, useCartStore } from "@/entities/cart";
-import { Card } from "@/shared/ui";
+import { calcCartTotals, FREE_SHIPPING_THRESHOLD, useCartStore } from "@/entities/cart";
+import { Card, ProgressBar } from "@/shared/ui";
 import { formatPrice } from "@/shared/lib";
 import styles from "./CartSummary.module.css";
 
@@ -25,12 +25,18 @@ export const CartSummary = ({ action }: { action?: ReactNode }) => {
         <dt className={styles.total}>合計</dt>
         <dd className={styles.total}>{formatPrice(totals.total)}</dd>
       </dl>
-      {/* 送料無料まであと少しなら知らせる */}
-      {totals.remainingForFreeShipping > 0 && (
-        <p className={styles.note}>
-          あと {formatPrice(totals.remainingForFreeShipping)} で送料無料
-        </p>
-      )}
+      {/* 送料無料までの進み具合。達成したら緑にする */}
+      <ProgressBar
+        label="送料無料まで"
+        value={totals.subtotal}
+        max={FREE_SHIPPING_THRESHOLD}
+        valueText={
+          totals.remainingForFreeShipping > 0
+            ? `あと ${formatPrice(totals.remainingForFreeShipping)}`
+            : "達成！"
+        }
+        tone={totals.remainingForFreeShipping > 0 ? "primary" : "success"}
+      />
     </Card>
   );
 };

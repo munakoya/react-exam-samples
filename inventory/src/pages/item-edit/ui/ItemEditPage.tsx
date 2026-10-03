@@ -1,7 +1,16 @@
 import { useNavigate, useParams } from "react-router";
 import { useItem, useItemStore } from "@/entities/item";
 import { ItemForm, toFormInput, type ItemFormValues } from "@/features/item-form";
-import { Button, Card, Container, EmptyState, PageHeader, Stack, useToast } from "@/shared/ui";
+import {
+  Breadcrumb,
+  ButtonLink,
+  Card,
+  Container,
+  EmptyState,
+  PageHeader,
+  Stack,
+  useToast,
+} from "@/shared/ui";
 
 /**
  * 編集ページ（/items/:itemId/edit） ── pages/item-edit/ui
@@ -23,7 +32,7 @@ export const ItemEditPage = () => {
         <EmptyState
           title="商品が見つかりません"
           description="削除されたか、URL が間違っている可能性があります。"
-          action={<Button onClick={() => navigate("/items")}>一覧へ戻る</Button>}
+          action={<ButtonLink to="/items">一覧へ戻る</ButtonLink>}
         />
       </Container>
     );
@@ -38,6 +47,13 @@ export const ItemEditPage = () => {
   return (
     <Container size="sm">
       <Stack gap={5}>
+        <Breadcrumb
+          items={[
+            { label: "商品一覧", to: "/items" },
+            { label: item.name, to: `/items/${item.id}` },
+            { label: "編集" },
+          ]}
+        />
         <PageHeader title="編集" description={item.name} />
         <Card>
           {/*

@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.value {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 灰色の溝 */
+.track {
+  height: 8px;
+  overflow: hidden; /* 中のバーの角を、溝の丸い角に合わせて切り取る */
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+}
+
+/* 色のついたバー。長さは TSX から CSS 変数 --percent で受け取る */
+.bar {
+  width: var(--percent);
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.bar[data-tone="success"] {
+  background-color: var(--color-success);
+}
+.bar[data-tone="warning"] {
+  background-color: var(--color-warning);
+}
+.bar[data-tone="danger"] {
+  background-color: var(--color-danger);
+}

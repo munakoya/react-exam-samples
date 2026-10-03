@@ -1,0 +1,37 @@
+/*
+ * container-type: inline-size
+ *   この <dl> の幅で、下の @container を切り替える（画面の幅ではなく、置かれた場所の幅）
+ */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  container-type: inline-size;
+}
+
+/* 1組を「項目名（8em） | 値」の2列にする */
+.row {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  gap: var(--space-4);
+}
+
+.term {
+  color: var(--color-text-muted);
+}
+
+.description {
+  overflow-wrap: anywhere; /* 長い英数字（URL など）でも枠からはみ出さない */
+}
+
+.description[data-multiline="true"] {
+  white-space: pre-wrap; /* 入力した改行をそのまま表示する */
+}
+
+/* 置かれた場所が狭いときは、項目名の下に値を置く */
+@container (max-width: 420px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

@@ -1,0 +1,79 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-4);
+  width: 220px;
+  padding: var(--space-3);
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: var(--color-surface);
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* 今のページ。NavLink が付ける "active" クラスは CSS Modules の外の名前なので :global() で指定する */
+.link:global(.active) {
+  background-color: color-mix(in srgb, var(--color-primary) 12%, white);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* メニューの下の要素は、いちばん下に寄せる */
+.footer {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.backdrop {
+  display: none;
+}
+
+/* ---------- 狭い幅（AppShell が 768px 未満） ---------- */
+@container app-shell (max-width: 767px) {
+  /* 閉じている間は隠し、開いたらメインの上に重ねる（AppShell の .body が基準） */
+  .nav {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav[data-open="true"] {
+    display: flex;
+  }
+
+  .backdrop[data-open="true"] {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background-color: rgb(0 0 0 / 0.3);
+  }
+}

@@ -5,7 +5,7 @@ import {
   toFormInput,
   type ReservationFormValues,
 } from "@/features/reservation-form";
-import { Button, Card, Container, EmptyState, PageHeader, Stack, useToast } from "@/shared/ui";
+import { ButtonLink, Card, Container, EmptyState, PageHeader, Stack, useToast } from "@/shared/ui";
 
 /**
  * 予約の変更ページ（/reservations/:reservationId/edit） ── pages/reservation-edit/ui
@@ -24,7 +24,7 @@ export const ReservationEditPage = () => {
       <Container size="sm">
         <EmptyState
           title="予約が見つかりません"
-          action={<Button onClick={() => navigate("/schedule")}>スケジュールへ</Button>}
+          action={<ButtonLink to="/schedule">スケジュールへ</ButtonLink>}
         />
       </Container>
     );

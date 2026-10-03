@@ -71,20 +71,21 @@ src/
 
 ## 学習ポイント
 
-| ポイント                                        | 見るところ                                                                                                                                        |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| モーダルのフォームを開くたびに `reset` する     | [features/task-form/ui/TaskFormModal.tsx](src/features/task-form/ui/TaskFormModal.tsx)                                                            |
-| `<form>` の外の送信ボタン（`form` 属性）        | 同上（モーダルの footer のボタン）                                                                                                                |
-| ラジオボタン・任意の日付の zod                  | [features/task-form/model/schema.ts](src/features/task-form/model/schema.ts)                                                                      |
-| 開閉の state をカスタムフックにまとめる         | [features/task-form/model/useTaskFormModal.ts](src/features/task-form/model/useTaskFormModal.ts)                                                  |
-| データの store と表示設定の store を分ける      | [features/task-filter/model/taskFilterStore.ts](src/features/task-filter/model/taskFilterStore.ts)                                                |
-| 並び替え（比較関数・`toSorted`）                | [features/task-filter/model/filterTasks.ts](src/features/task-filter/model/filterTasks.ts)                                                        |
-| `"YYYY-MM-DD"` を文字列のまま比べる・今日の日付 | [shared/lib/date.ts](src/shared/lib/date.ts)・`isOverdue`（[task.ts](src/entities/task/model/task.ts)）                                           |
-| 数値を返すセレクター（`filter(...).length`）    | [features/delete-task/ui/DeleteDoneTasksButton.tsx](src/features/delete-task/ui/DeleteDoneTasksButton.tsx)                                        |
-| 操作を外から差し込むカード（`actions`）         | [entities/task/ui/TaskCard.tsx](src/entities/task/ui/TaskCard.tsx)                                                                                |
-| `as const satisfies Record<...>`                | [entities/task/ui/TaskBadges.tsx](src/entities/task/ui/TaskBadges.tsx)                                                                            |
-| 同じ store を2つの画面で使う                    | [pages/task-list](src/pages/task-list/ui/TaskListPage.tsx)・[pages/task-board](src/pages/task-board/ui/TaskBoardPage.tsx)                         |
-| 3列のボード（`minmax(0, 1fr)`）、集計の Grid    | [TaskBoard.module.css](src/widgets/task-board/ui/TaskBoard.module.css)・[TaskListPage.module.css](src/pages/task-list/ui/TaskListPage.module.css) |
+| ポイント                                                   | 見るところ                                                                                                                |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| モーダルのフォームを開くたびに `reset` する                | [features/task-form/ui/TaskFormModal.tsx](src/features/task-form/ui/TaskFormModal.tsx)                                    |
+| `<form>` の外の送信ボタン（`form` 属性）                   | 同上（モーダルの footer のボタン）                                                                                        |
+| ラジオボタン・任意の日付の zod                             | [features/task-form/model/schema.ts](src/features/task-form/model/schema.ts)                                              |
+| 開閉の state をカスタムフックにまとめる                    | [features/task-form/model/useTaskFormModal.ts](src/features/task-form/model/useTaskFormModal.ts)                          |
+| データの store と表示設定の store を分ける                 | [features/task-filter/model/taskFilterStore.ts](src/features/task-filter/model/taskFilterStore.ts)                        |
+| 並び替え（比較関数・`toSorted`）                           | [features/task-filter/model/filterTasks.ts](src/features/task-filter/model/filterTasks.ts)                                |
+| `"YYYY-MM-DD"` を文字列のまま比べる・今日の日付            | [shared/lib/date.ts](src/shared/lib/date.ts)・`isOverdue`（[task.ts](src/entities/task/model/task.ts)）                   |
+| 数値を返すセレクター（`filter(...).length`）               | [features/delete-task/ui/DeleteDoneTasksButton.tsx](src/features/delete-task/ui/DeleteDoneTasksButton.tsx)                |
+| 操作を外から差し込むカード（`actions`）                    | [entities/task/ui/TaskCard.tsx](src/entities/task/ui/TaskCard.tsx)                                                        |
+| `as const satisfies Record<...>`                           | [entities/task/ui/TaskBadges.tsx](src/entities/task/ui/TaskBadges.tsx)                                                    |
+| 同じ store を2つの画面で使う                               | [pages/task-list](src/pages/task-list/ui/TaskListPage.tsx)・[pages/task-board](src/pages/task-board/ui/TaskBoardPage.tsx) |
+| 3列のボード（`minmax(0, 1fr)`）                            | [TaskBoard.module.css](src/widgets/task-board/ui/TaskBoard.module.css)                                                    |
+| 集計（`Stat` を `Grid` で並べる）・完了率（`ProgressBar`） | [pages/task-list/ui/TaskListPage.tsx](src/pages/task-list/ui/TaskListPage.tsx)                                            |
 
 ## 動かし方
 

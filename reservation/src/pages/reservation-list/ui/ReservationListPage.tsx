@@ -1,8 +1,8 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { compareByStart, useReservationStore } from "@/entities/reservation";
 import { findRoom, roomOptions } from "@/entities/room";
 import { todayString } from "@/shared/lib";
-import { Button, Container, PageHeader, SelectField, Stack, Switch } from "@/shared/ui";
+import { ButtonLink, Container, PageHeader, SelectField, Stack, Switch } from "@/shared/ui";
 import { ReservationTable } from "@/widgets/reservation-table";
 import styles from "./ReservationListPage.module.css";
 
@@ -12,7 +12,6 @@ import styles from "./ReservationListPage.module.css";
  * 初めは「今日以降の予約」だけを、日時の早い順に表示する。
  */
 export const ReservationListPage = () => {
-  const navigate = useNavigate();
   const reservations = useReservationStore((state) => state.reservations);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,7 +42,7 @@ export const ReservationListPage = () => {
       <Stack gap={5}>
         <PageHeader
           title="予約一覧"
-          action={<Button onClick={() => navigate("/reservations/new")}>＋ 新規予約</Button>}
+          action={<ButtonLink to="/reservations/new">＋ 新規予約</ButtonLink>}
         />
 
         <Stack direction="row" gap={4} align="end" wrap>

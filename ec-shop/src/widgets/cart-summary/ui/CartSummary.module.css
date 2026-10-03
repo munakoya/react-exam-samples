@@ -21,9 +21,3 @@
   font-size: var(--font-size-lg);
   font-weight: 700;
 }
-
-.note {
-  margin-top: var(--space-3);
-  color: var(--color-success);
-  font-size: var(--font-size-sm);
-}

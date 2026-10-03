@@ -1,14 +1,5 @@
 /* 詳細ページだけで使う見た目 */
 
-.back {
-  font-size: var(--font-size-sm);
-  text-decoration: none;
-}
-
-.back:hover {
-  text-decoration: underline;
-}
-
 .section {
   display: flex;
   flex-direction: column;
@@ -17,37 +8,4 @@
 
 .sectionTitle {
   font-size: var(--font-size-lg);
-}
-
-/* 項目名（左）と値（右）の2列。Grid で行の高さをそろえる */
-.list {
-  display: grid;
-  grid-template-columns: 8em 1fr;
-  gap: var(--space-3) var(--space-4); /* 行の間隔 列の間隔 */
-}
-
-.list dt {
-  color: var(--color-text-muted);
-}
-
-/* 長い英数字（URL など）でも枠からはみ出さず折り返す */
-.list dd {
-  overflow-wrap: anywhere;
-}
-
-/* 入力した改行をそのまま表示する */
-.list dd[data-multiline] {
-  white-space: pre-wrap;
-}
-
-/* 狭い画面では、項目名の下に値を置く1列にする */
-@media (width < 480px) {
-  .list {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-
-  .list dd + dt {
-    margin-top: var(--space-2);
-  }
 }

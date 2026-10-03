@@ -1,10 +1,19 @@
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { formatTimeRange, useReservation } from "@/entities/reservation";
 import { findRoom } from "@/entities/room";
 import { CancelReservationButton } from "@/features/cancel-reservation";
 import { formatDateTime, formatDateWithWeekday, todayString } from "@/shared/lib";
-import { Badge, Button, Card, Container, EmptyState, PageHeader, Stack } from "@/shared/ui";
-import styles from "./ReservationDetailPage.module.css";
+import {
+  Badge,
+  Breadcrumb,
+  ButtonLink,
+  Card,
+  Container,
+  DescriptionList,
+  EmptyState,
+  PageHeader,
+  Stack,
+} from "@/shared/ui";
 
 /**
  * 予約の詳細ページ（/reservations/:reservationId） ── pages/reservation-detail/ui
@@ -20,7 +29,7 @@ export const ReservationDetailPage = () => {
         <EmptyState
           title="予約が見つかりません"
           description="取り消されたか、URL が間違っている可能性があります。"
-          action={<Button onClick={() => navigate("/schedule")}>スケジュールへ</Button>}
+          action={<ButtonLink to="/schedule">スケジュールへ</ButtonLink>}
         />
       </Container>
     );
@@ -33,9 +42,12 @@ export const ReservationDetailPage = () => {
   return (
     <Container size="sm">
       <Stack gap={5}>
-        <Link to={scheduleUrl} className={styles.back}>
-          ← この日のスケジュール
-        </Link>
+        <Breadcrumb
+          items={[
+            { label: formatDateWithWeekday(reservation.date), to: scheduleUrl },
+            { label: reservation.title },
+          ]}
+        />
 
         <PageHeader
           title={reservation.title}
@@ -46,12 +58,9 @@ export const ReservationDetailPage = () => {
               <Badge>終了</Badge>
             ) : (
               <Stack direction="row" gap={2}>
-                <Button
-                  variant="secondary"
-                  onClick={() => navigate(`/reservations/${reservation.id}/edit`)}
-                >
+                <ButtonLink to={`/reservations/${reservation.id}/edit`} variant="secondary">
                   変更
-                </Button>
+                </ButtonLink>
                 <CancelReservationButton
                   reservation={reservation}
                   onCanceled={() => navigate(scheduleUrl, { replace: true })}
@@ -62,22 +71,20 @@ export const ReservationDetailPage = () => {
         />
 
         <Card>
-          <dl className={styles.list}>
-            <dt>会議室</dt>
-            <dd>
-              {room
-                ? `${room.name}（定員${room.capacity}名・${room.equipment}）`
-                : "（削除された会議室）"}
-            </dd>
-            <dt>予約者</dt>
-            <dd>{reservation.reserverName}</dd>
-            <dt>人数</dt>
-            <dd>{reservation.attendees}名</dd>
-            <dt>メモ</dt>
-            <dd data-multiline>{reservation.note || "—"}</dd>
-            <dt>登録日時</dt>
-            <dd>{formatDateTime(reservation.createdAt)}</dd>
-          </dl>
+          <DescriptionList
+            items={[
+              {
+                term: "会議室",
+                description: room
+                  ? `${room.name}（定員${room.capacity}名・${room.equipment}）`
+                  : "（削除された会議室）",
+              },
+              { term: "予約者", description: reservation.reserverName },
+              { term: "人数", description: `${reservation.attendees}名` },
+              { term: "メモ", description: reservation.note || "—", multiline: true },
+              { term: "登録日時", description: formatDateTime(reservation.createdAt) },
+            ]}
+          />
         </Card>
       </Stack>
     </Container>
