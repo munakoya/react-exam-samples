@@ -1,0 +1,50 @@
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--font-size-lg);
+}
+
+/* プレビューとツールバーを1つの枠で囲む */
+.frame {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+.preview {
+  padding: var(--space-6) var(--space-5);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.toolButton {
+  padding: var(--space-1) var(--space-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.toolButton:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.toolButton:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

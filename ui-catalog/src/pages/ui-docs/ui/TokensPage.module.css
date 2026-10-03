@@ -1,0 +1,115 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.heading {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-xl);
+}
+
+/* ---------- 表（ul を Grid で表のように並べる） ---------- */
+
+.table {
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+/* 見本なし：名前・値・説明 の3列 */
+.row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1.2fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* 見本あり：見本・名前・値・説明 の4列（TSX の data-preview と連動） */
+.row[data-preview="true"] {
+  grid-template-columns: 120px 200px 1fr 1.2fr;
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  justify-self: start;
+  padding: 2px var(--space-1);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-primary);
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.name:hover {
+  background-color: var(--color-surface);
+}
+
+.name:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.value {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.comment {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ---------- 見本 ---------- */
+
+.swatch {
+  width: 48px;
+  height: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.bar {
+  height: 12px;
+  border-radius: 2px;
+  background-color: var(--color-primary);
+}
+
+.radius {
+  width: 48px;
+  height: 32px;
+  border: 2px solid var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+}
+
+.shadow {
+  width: 64px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+/* スマホ：1行に縦に積む */
+@media (max-width: 599px) {
+  .row,
+  .row[data-preview="true"] {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

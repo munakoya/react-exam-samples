@@ -30,9 +30,18 @@ type HeaderProps = {
   menuOpen?: boolean;
   /** ☰ ボタンが押されたとき。渡さなければ ☰ ボタンを出さない */
   onMenuClick?: () => void;
+  /** 開閉する Sidebar の id。1つの画面に Sidebar を2つ置くときだけ変える（Sidebar の id と同じ値にする） */
+  menuId?: string;
 };
 
-export const Header = ({ title, homeTo, right, menuOpen = false, onMenuClick }: HeaderProps) => {
+export const Header = ({
+  title,
+  homeTo,
+  right,
+  menuOpen = false,
+  onMenuClick,
+  menuId = SIDEBAR_ID,
+}: HeaderProps) => {
   return (
     <header className={styles.header}>
       {onMenuClick && (
@@ -41,7 +50,7 @@ export const Header = ({ title, homeTo, right, menuOpen = false, onMenuClick }: 
           className={styles.menuButton}
           onClick={onMenuClick}
           aria-expanded={menuOpen} // 開いているかを読み上げで伝える
-          aria-controls={SIDEBAR_ID} // どの要素を開閉するボタンか（Sidebar の id）
+          aria-controls={menuId} // どの要素を開閉するボタンか（Sidebar の id）
           aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
         >
           ☰

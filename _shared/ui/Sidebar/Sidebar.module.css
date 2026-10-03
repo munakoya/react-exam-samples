@@ -1,12 +1,24 @@
+/* 枠（背景と右の線）は、メインと同じ高さまで伸ばす */
 .nav {
-  display: flex;
-  flex-direction: column;
   flex-shrink: 0;
-  gap: var(--space-4);
   width: 220px;
-  padding: var(--space-3);
   border-right: 1px solid var(--color-border);
   background-color: var(--color-bg);
+}
+
+/*
+ * 中身は sticky で、スクロールしても画面に残す。
+ * 56px は Header の高さ（Header.module.css）。メニューが長いときは、この中だけスクロールする
+ */
+.inner {
+  position: sticky;
+  top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: calc(100dvh - 56px);
+  padding: var(--space-3);
+  overflow-y: auto;
 }
 
 .list {
@@ -41,6 +53,20 @@
   font-weight: 600;
 }
 
+/* 見出しつきのグループ */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.groupTitle {
+  padding: 0 var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
 /* メニューの下の要素は、いちばん下に寄せる */
 .footer {
   margin-top: auto;
@@ -66,7 +92,7 @@
   }
 
   .nav[data-open="true"] {
-    display: flex;
+    display: block;
   }
 
   .backdrop[data-open="true"] {

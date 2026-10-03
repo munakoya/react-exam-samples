@@ -11,6 +11,7 @@
   "scripts": {
     "sync-ui": "node scripts/sync-ui.mjs",
     "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "lint": "npm run lint --workspaces",
+    "build:pages": "node scripts/build-pages.mjs"
   }
 }

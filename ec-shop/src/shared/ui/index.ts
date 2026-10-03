@@ -11,7 +11,7 @@
 // ---------- アプリの枠 ----------
 export { AppShell } from "./AppShell/AppShell"; // ヘッダー・サイドバー・メインを並べる枠
 export { Header } from "./Header/Header"; // 上のヘッダー（☰・アプリ名・右側の要素）
-export { Sidebar, type SidebarNavItem } from "./Sidebar/Sidebar"; // 左のメニュー（狭い幅では開閉）
+export { Sidebar, type SidebarGroup, type SidebarNavItem } from "./Sidebar/Sidebar"; // 左のメニュー（狭い幅では開閉）
 
 // ---------- レイアウト ----------
 export { Container } from "./Container/Container"; // ページの最大幅・中央寄せ

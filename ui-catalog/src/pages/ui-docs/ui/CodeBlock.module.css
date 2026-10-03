@@ -1,0 +1,51 @@
+.block {
+  overflow: hidden;
+  border: 1px solid #2d2f3a;
+  border-radius: var(--radius-md);
+  background-color: #1e1f29; /* コードは暗い背景で、本文と区別する */
+  color: #e6e6ef;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  border-bottom: 1px solid #2d2f3a;
+}
+
+.fileName {
+  color: #a3a6bd;
+  font-size: var(--font-size-sm);
+}
+
+.copy {
+  padding: 2px var(--space-2);
+  border: 1px solid #3a3d4d;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: #e6e6ef;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.copy:hover {
+  background-color: #2d2f3a;
+}
+
+.copy:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.pre {
+  max-height: 480px; /* 長いコードは枠の中でスクロールする */
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  overflow: auto;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 2;
+}

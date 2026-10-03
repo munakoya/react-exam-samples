@@ -2,6 +2,8 @@
 
 > 試験に出そうなお題を、同じ技術・同じ設計で作った**参考プロジェクト**。
 > まず自分で作ってみて、あとでサンプルと見比べる（答え合わせ）ための教材。
+>
+> 公開ページ：https://munakoya.github.io/react-exam-samples/ （全サンプルと UI 部品カタログをブラウザで試せる）
 
 | 項目           | 使っているもの                                                               |
 | -------------- | ---------------------------------------------------------------------------- |
@@ -43,10 +45,9 @@
 
 ## 動かし方
 
-`samples/` で1回 `npm install` すると、全サンプルの依存がまとめて入る（npm workspaces）。
+このフォルダ（TechHub では `frontend/exam/samples/`、公開リポジトリではルート）で1回 `npm install` すると、全サンプルの依存がまとめて入る（npm workspaces）。
 
 ```bash
-cd frontend/exam/samples
 npm install
 
 npm run dev -w task-manager   # http://localhost:5173
@@ -134,7 +135,7 @@ export const useXxxStore = create<XxxStore>()(
 
 ## UI 部品
 
-全サンプル共通の部品。見本・使う場面・使いそうなお題は **UI 部品カタログ**（[ui-catalog](ui-catalog/)、`npm run dev -w ui-catalog`）にまとめてある。
+全サンプル共通の部品。**UI 部品カタログ**（[ui-catalog](ui-catalog/)、`npm run dev -w ui-catalog`、公開ページにもある）で、部品ごとに 見本（動く・コードをコピーできる）・props・ソースコード・使いそうなお題 を見られる。部品名・やりたいこと・お題（「アルバム」「評価」など）で検索できる。
 
 | 分類           | 部品                                                                                                                                                                     |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -162,15 +163,52 @@ React Hook Form とのつなぎ方は、カタログの「フォームの組み�
 npm run sync-ui
 ```
 
+## GitHub Pages での公開
+
+TechHub は非公開なので、このフォルダだけを公開リポジトリ [munakoya/react-exam-samples](https://github.com/munakoya/react-exam-samples) に送り、GitHub Pages で公開している。
+
+```text
+TechHub（非公開）                         react-exam-samples（公開）
+frontend/exam/samples/ ── git subtree push ──→ main ── GitHub Actions ──→ GitHub Pages
+```
+
+### 公開の仕組み
+
+- [.github/workflows/pages.yml](.github/workflows/pages.yml)：main に push されると、lint・型チェックのあと全アプリをビルドして公開する
+- [scripts/build-pages.mjs](scripts/build-pages.mjs)：各アプリを `/react-exam-samples/<アプリ名>/` の下で動くようにビルドし（`vite build --base`）、トップページと `404.html` を作る
+- 各アプリの `AppProviders` は、`import.meta.env.BASE_URL` を `BrowserRouter` の `basename` に渡している（手元では `/`）
+- GitHub Pages は `/react-exam-samples/inventory/items/abc` のような URL を再読み込みすると 404 になる。`404.html` がアプリのトップへ送り、アプリ側で元の URL に戻す
+
+手元で公開用のビルドを試すとき：
+
+```bash
+npm run build:pages   # _site/ にできる
+```
+
+### 更新するとき（TechHub のルートで）
+
+TechHub でコミットしてから、`samples` フォルダの履歴だけを公開リポジトリへ送る。
+
+```bash
+# 初回だけ：公開リポジトリを「samples」という名前で登録する
+git remote add samples https://github.com/munakoya/react-exam-samples.git
+
+# samples フォルダの変更を送る（push すると GitHub Actions が動いて公開される）
+git subtree push --prefix=frontend/exam/samples samples main
+```
+
 ## サンプルを増やすとき
 
 1. 既存のサンプル（例：`inventory`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
 2. `entities`・`features`・`widgets`・`pages` をお題に合わせて作り直す
 3. [package.json](package.json) の `workspaces` にフォルダ名を足す
-4. この README のお題一覧を更新する
+4. [scripts/build-pages.mjs](scripts/build-pages.mjs) の `appInfo` に、公開ページのトップに出す名前と説明を足す
+5. この README のお題一覧を更新する
 
-## 関連
+## 公式ドキュメント
 
-- [React Sample App](../react-sample-app/README.md) … 部品のドキュメント（`/ui`）、MUI 版のサンプル
-- [Zustand](../../libraries/zustand.md)・[React Hook Form](../../libraries/react-hook-form.md)・[zod](../../libraries/zod.md)・[React Router](../../libraries/react-router.md)
-- [FSD](../../architecture/fsd.md)
+- [Zustand](https://zustand.docs.pmnd.rs/)（persist：Integrations → Persisting store data）
+- [React Hook Form](https://react-hook-form.com/)・[zod](https://zod.dev/)
+- [React Router](https://reactrouter.com/)
+- [Feature-Sliced Design](https://feature-sliced.design/)
+- [Vite](https://vite.dev/)（`base`・`import.meta.env.BASE_URL`）

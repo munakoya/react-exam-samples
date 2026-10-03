@@ -1,0 +1,57 @@
+# main に push したら、全アプリをビルドして GitHub Pages に公開する
+#
+# 公開先：https://<ユーザー名>.github.io/<リポジトリ名>/
+# 初回だけ、リポジトリの Settings → Pages → Source を「GitHub Actions」にする。
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Actions の画面から手動でも動かせる
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 続けて push したときは、古い公開を取りやめて新しい方だけを公開する
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # lint と型チェックが通らなければ公開しない
+      - run: npm run lint
+      - run: npm run build
+
+      # _site/ に全アプリ・トップページ・404.html を作る
+      - run: node scripts/build-pages.mjs
+        env:
+          PAGES_BASE: /${{ github.event.repository.name }}/
+          PAGES_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

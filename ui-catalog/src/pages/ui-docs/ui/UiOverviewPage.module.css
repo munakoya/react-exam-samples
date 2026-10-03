@@ -1,0 +1,114 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.heading {
+  font-size: var(--font-size-xl);
+}
+
+/* 手順の番号付きリスト */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-left: var(--space-5);
+}
+
+.steps li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* 文中のコード（p の中だけ。CodeBlock の中の <code> には当てない） */
+.steps p code {
+  padding: 1px var(--space-1);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-border);
+  font-size: 13px;
+}
+
+/* 部品カードの一覧（1枚あたり最低 220px） */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.grid > li {
+  display: flex;
+}
+
+/* カード全体がリンク */
+.card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: border-color var(--transition);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+}
+
+.card:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.cardTitle {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.cardDescription {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.cardTopics {
+  margin-top: auto; /* カードの一番下に寄せる */
+  padding-top: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* 検索の例（押すとその言葉で検索する） */
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.example {
+  padding: 2px var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.example:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.example:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

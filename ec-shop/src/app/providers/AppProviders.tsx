@@ -12,6 +12,15 @@ import { ToastProvider } from "@/shared/ui";
  *
  * Zustand の store は Provider が要らない（どこからでも useXxxStore を呼べる）。
  */
+
+/*
+ * アプリを置く場所（basename）。
+ * ふだんは "/"。GitHub Pages のように "/リポジトリ名/アプリ名/" の下に置くときは、
+ * ビルド時の vite build --base で決めた値が import.meta.env.BASE_URL に入る。
+ * 末尾の "/" は外して渡す（"/repo/app" でも "/repo/app/" でも一致するように）
+ */
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
     /*
@@ -23,7 +32,7 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
      *   → カートが空になった購入ページが先に描画され、「カートが空なら /cart へ戻す」が動いてしまう
      * false にすると、移動と store の更新が同じタイミングで反映され、書いた順に動く。
      */
-    <BrowserRouter useTransitions={false}>
+    <BrowserRouter basename={basename} useTransitions={false}>
       <ToastProvider>{children}</ToastProvider>
     </BrowserRouter>
   );

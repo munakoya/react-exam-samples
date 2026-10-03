@@ -1,34 +1,28 @@
 import { Route, Routes } from "react-router";
-import { DisplayPage } from "@/pages/display";
-import { FeedbackPage } from "@/pages/feedback";
 import { FormDemoPage } from "@/pages/form-demo";
-import { HomePage } from "@/pages/home";
-import { InputsPage } from "@/pages/inputs";
-import { NavigationPage } from "@/pages/navigation";
-import { NotFoundPage } from "@/pages/not-found";
-import { RootLayout } from "./layouts/RootLayout";
+import { ComponentDocPage, TokensPage, UiOverviewPage } from "@/pages/ui-docs";
+import { DocsContainer, RootLayout } from "./layouts/RootLayout";
 
 /**
  * UI 部品カタログのルーティング
  *
- *   /            部品の一覧（どのお題で使うか）
- *   /inputs      入力
- *   /display     表示
- *   /navigation  ナビゲーション
- *   /feedback    フィードバック・ダイアログ
- *   /form        React Hook Form ＋ zod で部品を組み合わせた例
+ *   /         部品を探す（検索・一覧・使い始め方）
+ *   /tokens   デザイントークン（tokens.css の一覧）
+ *   /form     React Hook Form ＋ zod で部品を組み合わせた例
+ *   /:slug    部品1つ分のページ（/button など）。決まった path（tokens・form）が優先される
  */
 export const App = () => {
   return (
     <Routes>
       <Route element={<RootLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/inputs" element={<InputsPage />} />
-        <Route path="/display" element={<DisplayPage />} />
-        <Route path="/navigation" element={<NavigationPage />} />
-        <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/form" element={<FormDemoPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route element={<DocsContainer />}>
+          <Route index element={<UiOverviewPage />} />
+          <Route path="/tokens" element={<TokensPage />} />
+          <Route path="/:slug" element={<ComponentDocPage />} />
+          {/* どれにも一致しない URL（/a/b など）も「部品が見つかりません」にする */}
+          <Route path="*" element={<ComponentDocPage />} />
+        </Route>
       </Route>
     </Routes>
   );
