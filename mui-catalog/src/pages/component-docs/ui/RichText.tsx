@@ -20,6 +20,7 @@ export const RichText = ({ text }: { text: string }) =>
           borderRadius: 0.5,
           bgcolor: "grey.100",
           fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace',
+          fontVariantLigatures: "none", // => や === を記号（⇒・≡）にまとめない
           fontSize: "0.85em",
           overflowWrap: "anywhere",
         }}

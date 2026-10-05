@@ -60,7 +60,8 @@ type AppShellProps = {
 export const AppShell = ({ title, navItems, homeTo = "/", headerRight, children }: AppShellProps) => {
   // 画面幅が md（900px）以上かどうか。ブレークポイントは theme の値を使う
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  // noSsr：最初の描画から正しい値にする（初期値の false で一度描いてから切り替わると、レイアウトがずれる）
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"), { noSsr: true });
 
   // スマホでメニューを開いているか
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -74,7 +75,7 @@ export const AppShell = ({ title, navItems, homeTo = "/", headerRight, children 
           // <ul> の直下は <li> だけにする。ListSubheader も ListItem も <li> なので、Fragment で横に並べる
           <Fragment key={item.to}>
             {showGroup && (
-              <ListSubheader disableSticky sx={{ lineHeight: "36px", mt: index === 0 ? 0 : 1 }}>
+              <ListSubheader disableSticky sx={{ lineHeight: 1.5, pt: index === 0 ? 1 : 2, pb: 1 }}>
                 {item.group}
               </ListSubheader>
             )}

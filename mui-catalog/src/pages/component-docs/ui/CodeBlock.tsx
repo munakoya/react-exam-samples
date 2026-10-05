@@ -50,6 +50,7 @@ export const CodeBlock = ({ code, fileName }: CodeBlockProps) => {
           fontSize: 13,
           lineHeight: 1.6,
           fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace',
+          fontVariantLigatures: "none", // => や === を記号（⇒・≡）にまとめない
         }}
       >
         <code>{code.trimEnd()}</code>

@@ -8,7 +8,8 @@
     "reservation",
     "ui-catalog",
     "library",
-    "mui-catalog"
+    "mui-catalog",
+    "guide"
   ],
   "scripts": {
     "sync-ui": "node scripts/sync-ui.mjs",

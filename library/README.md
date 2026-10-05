@@ -2,7 +2,7 @@
 
 > [サンプル集の目次](../README.md)・MUI 版の共通の作りは目次の README を参照。
 >
-> **解説書**：[docs/](docs/README.md) … プロジェクトの作成・設計の考え方・モダン JS・ライブラリ（MUI を含む）・実装手順・つまずきまで、このアプリを例に説明している。
+> **解説書**：[docs/](docs/README.md)（ブラウザで読む：https://munakoya.github.io/react-exam-samples/guide/library ） … プロジェクトの作成・設計の考え方・モダン JS・ライブラリ（MUI を含む）・実装手順・つまずきまで、このアプリを例に説明している。
 > MUI の部品ごとの使い方は [MUI 部品カタログ](../mui-catalog/)、画面の組み立て方は [MUI 画面構築ガイド](../mui-catalog/docs/README.md)。
 
 ## お題

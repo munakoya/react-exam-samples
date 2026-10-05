@@ -4,6 +4,8 @@
 > まず自分で作ってみて、あとでサンプルと見比べる（答え合わせ）ための教材。
 >
 > 公開ページ：https://munakoya.github.io/react-exam-samples/ （全サンプルと UI 部品カタログをブラウザで試せる）
+>
+> **解説書・ガイド（読みもの）**：https://munakoya.github.io/react-exam-samples/guide/ … ライブラリ・モダン JS・設計と実装の考え方・MUI 画面構築ガイド・各サンプルの要件を、ブラウザで検索して読める（[guide](guide/)）
 
 | 項目           | 使っているもの                                                               |
 | -------------- | ---------------------------------------------------------------------------- |
@@ -68,6 +70,7 @@ npm run dev -w reservation
 npm run dev -w ui-catalog     # UI 部品のカタログ
 npm run dev -w library        # 蔵書管理（MUI 版）
 npm run dev -w mui-catalog    # MUI 部品のカタログ
+npm run dev -w guide          # 解説書・ガイド（読みもの）
 
 npm run build                 # 全サンプルの型チェック ＋ ビルド
 npm run lint                  # 全サンプルの lint

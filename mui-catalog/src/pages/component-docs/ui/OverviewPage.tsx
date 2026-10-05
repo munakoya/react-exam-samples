@@ -30,7 +30,7 @@ import { RichText } from "./RichText";
  * カタログのトップ（/）：部品を探す・使い始め方・v9 の注意点
  */
 
-const GUIDE_URL = "https://github.com/munakoya/react-exam-samples/tree/main/mui-catalog/docs";
+const GUIDE_URL = "https://munakoya.github.io/react-exam-samples/guide/mui-guide";
 const LIBRARY_URL = "https://munakoya.github.io/react-exam-samples/library/";
 
 const installCode = `npm install @mui/material @emotion/react @emotion/styled

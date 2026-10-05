@@ -33,6 +33,11 @@ const { workspaces } = JSON.parse(readFileSync(join(root, "package.json"), "utf8
 
 // トップページに出す説明（package.json の workspaces に足したら、ここにも足す）
 const appInfo = {
+  guide: {
+    title: "解説書・ガイド（読みもの）",
+    description:
+      "ライブラリ・モダン JS・設計と実装の考え方・MUI 画面構築ガイド・各サンプルの要件を検索して読める",
+  },
   "ui-catalog": {
     title: "UI 部品カタログ",
     description:
@@ -65,11 +70,10 @@ const appInfo = {
   },
 };
 
-// アプリの一覧（カタログを先頭にする）
-const catalogs = ["ui-catalog", "mui-catalog"];
-const apps = [...workspaces].sort(
-  (a, b) => Number(catalogs.includes(b)) - Number(catalogs.includes(a)),
-);
+// アプリの一覧（読みもの・カタログを先頭に、この順で並べる。ほかは workspaces の順）
+const pinned = ["guide", "ui-catalog", "mui-catalog"];
+const rank = (app) => (pinned.includes(app) ? pinned.indexOf(app) : pinned.length);
+const apps = [...workspaces].sort((a, b) => rank(a) - rank(b));
 
 // 各アプリの index.html の <head> に入れる「元の URL に戻す」スクリプト
 const restoreScript = `<script>
@@ -172,7 +176,7 @@ writeFileSync(
         margin: 0; padding: 0; list-style: none; }
       .card { display: flex; flex-direction: column; gap: 8px; padding: 20px;
         border: 1px solid var(--border); border-radius: 12px; background: #fff; }
-      .card:nth-child(-n + 2) { border-color: var(--primary); } /* 先頭の2つ（カタログ）を強調 */
+      .card:nth-child(-n + 3) { border-color: var(--primary); } /* 先頭の3つ（読みもの・カタログ）を強調 */
       .card p { flex: 1; margin: 0; color: var(--muted); font-size: 14px; }
       .title { color: var(--primary); font-size: 18px; font-weight: 700; text-decoration: none; }
       .title:hover { text-decoration: underline; }

@@ -13,7 +13,11 @@ import type { PropDoc } from "../model/muiDocs";
  * props の一覧表（名前・型・初期値・説明）
  */
 
-const monospace = { fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace', fontSize: 13 };
+const monospace = {
+  fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace',
+  fontVariantLigatures: "none", // => や === を記号にまとめない
+  fontSize: 13,
+};
 
 export const PropsTable = ({ props, note }: { props: PropDoc[]; note?: string }) => {
   return (
