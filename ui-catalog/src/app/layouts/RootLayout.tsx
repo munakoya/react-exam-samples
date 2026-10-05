@@ -5,6 +5,7 @@ import {
   AppShell,
   Container,
   Header,
+  SamplesTopLink,
   Sidebar,
   type SidebarGroup,
   type SidebarNavItem,
@@ -42,6 +43,7 @@ export const RootLayout = () => {
           homeTo="/"
           menuOpen={menuOpen}
           onMenuClick={() => setMenuOpen((prev) => !prev)}
+          right={<SamplesTopLink />} // 公開ページだけに出る「← サンプル集」
         />
       }
       sidebar={

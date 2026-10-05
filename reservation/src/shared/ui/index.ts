@@ -60,3 +60,5 @@ export { ToastProvider } from "./Toast/ToastProvider"; // 通知の置き場所�
 // ---------- ダイアログ ----------
 export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog"; // 削除などの確認
 export { Modal } from "./Modal/Modal"; // フォームなどを載せる汎用のモーダル
+// サンプル集の公開ページ用（試験で作るアプリには要らない）
+export { SamplesTopLink } from "./SamplesTopLink/SamplesTopLink";

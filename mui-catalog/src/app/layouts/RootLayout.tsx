@@ -2,7 +2,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import { Outlet } from "react-router";
 import { muiCategories, muiDocs } from "@/pages/component-docs";
-import { AppShell, type AppShellNavItem } from "@/shared/ui";
+import { AppShell, SamplesTopLink, type AppShellNavItem } from "@/shared/ui";
 
 /**
  * 全ページ共通の枠（ヘッダー ＋ 部品のメニュー） ── app/layouts
@@ -24,7 +24,8 @@ const navItems: AppShellNavItem[] = [
 
 export const RootLayout = () => {
   return (
-    <AppShell title="MUI 部品カタログ" navItems={navItems}>
+    // headerRight：公開ページだけに出る「← サンプル集」
+    <AppShell title="MUI 部品カタログ" navItems={navItems} headerRight={<SamplesTopLink />}>
       <Outlet />
     </AppShell>
   );

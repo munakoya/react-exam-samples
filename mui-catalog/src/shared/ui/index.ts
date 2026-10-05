@@ -12,3 +12,5 @@ export { notify, useNotifierStore } from "./Notifier/notifierStore";
 export { PageHeader, type BreadcrumbItem } from "./PageHeader/PageHeader";
 export { QuantityStepper } from "./QuantityStepper/QuantityStepper";
 export { StatCard } from "./StatCard/StatCard";
+// サンプル集の公開ページ用（試験で作るアプリには要らない）
+export { SamplesTopLink } from "./SamplesTopLink/SamplesTopLink";

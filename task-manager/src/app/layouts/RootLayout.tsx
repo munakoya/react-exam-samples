@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
-import { AppShell, Header, Sidebar, type SidebarNavItem } from "@/shared/ui";
+import { AppShell, Header, SamplesTopLink, Sidebar, type SidebarNavItem } from "@/shared/ui";
 
 /**
  * 全ページ共通の枠（ヘッダー ＋ サイドバー） ── app/layouts
@@ -25,6 +25,7 @@ export const RootLayout = () => {
           homeTo="/"
           menuOpen={menuOpen}
           onMenuClick={() => setMenuOpen((prev) => !prev)}
+          right={<SamplesTopLink />} // 公開ページだけに出る「← サンプル集」
         />
       }
       sidebar={<Sidebar navItems={navItems} open={menuOpen} onClose={() => setMenuOpen(false)} />}

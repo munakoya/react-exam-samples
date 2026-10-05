@@ -64,6 +64,14 @@ const appInfo = {
     description:
       "Material UI の部品の押さえどころ・動く見本・props。画面の組み立て方は README の「MUI 画面構築ガイド」",
   },
+  "task-manager-mui": {
+    title: "タスク管理（MUI 版）",
+    description: "CSS 版と同じお題を MUI で。ダイアログで追加・編集、絞り込み・並び替え、かんばんボード",
+  },
+  "household-budget": {
+    title: "家計簿（MUI 版）",
+    description: "1 ページの小さな形。種類で変わるカテゴリ、月の合計・カテゴリ別の内訳、予算のバー",
+  },
   library: {
     title: "蔵書管理（MUI 版）",
     description: "MUI ＋ RHF ＋ zod ＋ Zustand。貸出・返却・期限切れ、URL で絞り込み・並び替え・ページ送り",

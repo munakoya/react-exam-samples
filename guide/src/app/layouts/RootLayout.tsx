@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { Link as RouterLink, Outlet } from "react-router";
 import { docBooks, docUrl } from "@/entities/doc";
-import { AppShell, type AppShellNavItem } from "@/shared/ui";
+import { AppShell, SamplesTopLink, type AppShellNavItem } from "@/shared/ui";
 
 /**
  * 全ページ共通の枠（ヘッダー ＋ 読みもののメニュー） ── app/layouts
@@ -31,11 +31,14 @@ export const RootLayout = () => {
       title="解説書・ガイド"
       navItems={navItems}
       headerRight={
-        <Tooltip title="検索">
-          <IconButton component={RouterLink} to="/search" color="inherit" aria-label="検索">
-            <SearchIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <SamplesTopLink /> {/* 公開ページだけに出る「← サンプル集」 */}
+          <Tooltip title="検索">
+            <IconButton component={RouterLink} to="/search" color="inherit" aria-label="検索">
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       }
     >
       <Outlet />

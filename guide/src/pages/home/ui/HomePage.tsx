@@ -33,7 +33,9 @@ const quickLinks: QuickLink[] = [
   { title: "環境構築", description: "Vite・パッケージ・テーマ・Provider・ルーティングをコピーして始める", to: "/library/01-setup" },
   { title: "よくあるバグと直し方", description: "React・RHF ＋ MUI・MUI v9 のエラーと直し方", to: "/library/06-thinking#6-3-よくあるバグと直し方" },
   { title: "提出前のチェックリスト", description: "機能・見た目・コード・提出物の確認、README の書き方", to: "/library/06-thinking#6-5-提出前のチェックリスト" },
-  { title: "蔵書管理（MUI 版）を動かす", description: "完成形のアプリ。ダッシュボードの「サンプルデータを入れる」で試せる", href: `${PAGES_URL}/library/` },
+  { title: "蔵書管理（MUI 版）を動かす", description: "一覧・詳細・登録・貸出の完成形。「サンプルデータを入れる」で試せる", href: `${PAGES_URL}/library/` },
+  { title: "タスク管理（MUI 版）を動かす", description: "ダイアログのフォーム・かんばんボード。CSS 版との違いは README に", href: `${PAGES_URL}/task-manager-mui/` },
+  { title: "家計簿（MUI 版）を動かす", description: "1 ページの小さな形。月の合計・カテゴリ別の内訳・予算", href: `${PAGES_URL}/household-budget/` },
 ];
 
 export const HomePage = () => {

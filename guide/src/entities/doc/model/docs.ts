@@ -78,6 +78,8 @@ const bookDefs: BookDef[] = [
     files: [
       { path: "README.md", slug: "" },
       { path: "library/README.md", slug: "library" },
+      { path: "task-manager-mui/README.md", slug: "task-manager-mui" },
+      { path: "household-budget/README.md", slug: "household-budget" },
       { path: "mui-catalog/README.md", slug: "mui-catalog" },
       { path: "task-manager/README.md", slug: "task-manager" },
       { path: "inventory/README.md", slug: "inventory" },

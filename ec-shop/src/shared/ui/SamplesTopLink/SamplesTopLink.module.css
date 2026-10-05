@@ -1,0 +1,18 @@
+.link {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link:hover {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

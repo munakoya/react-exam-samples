@@ -3,7 +3,7 @@ import LibraryAddOutlinedIcon from "@mui/icons-material/LibraryAddOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { Outlet } from "react-router";
-import { AppShell, type AppShellNavItem } from "@/shared/ui";
+import { AppShell, SamplesTopLink, type AppShellNavItem } from "@/shared/ui";
 
 /**
  * 全ページ共通の枠（ヘッダー ＋ サイドメニュー） ── app/layouts
@@ -28,7 +28,8 @@ const navItems: AppShellNavItem[] = [
 
 export const RootLayout = () => {
   return (
-    <AppShell title="蔵書管理" navItems={navItems}>
+    // headerRight：公開ページだけに出る「← サンプル集」
+    <AppShell title="蔵書管理" navItems={navItems} headerRight={<SamplesTopLink />}>
       <Outlet />
     </AppShell>
   );

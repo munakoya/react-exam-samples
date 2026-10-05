@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
-import { AppShell, Header, Sidebar, type SidebarNavItem } from "@/shared/ui";
+import { AppShell, Header, SamplesTopLink, Sidebar, type SidebarNavItem } from "@/shared/ui";
 import { HeaderCartLink } from "@/widgets/header-cart-link";
 
 /**
@@ -27,7 +27,12 @@ export const RootLayout = () => {
           homeTo="/"
           menuOpen={menuOpen}
           onMenuClick={() => setMenuOpen((prev) => !prev)}
-          right={<HeaderCartLink />}
+          right={
+            <>
+              <SamplesTopLink /> {/* 公開ページだけに出る「← サンプル集」 */}
+              <HeaderCartLink />
+            </>
+          }
         />
       }
       sidebar={<Sidebar navItems={navItems} open={menuOpen} onClose={() => setMenuOpen(false)} />}

@@ -20,7 +20,7 @@
 
 | 種類            | サンプル                                                                  | 資料                                                                                                                       |
 | --------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| MUI 版          | [蔵書管理（library）](library/)                                           | [MUI 部品カタログ](mui-catalog/)（動く見本）・[MUI 画面構築ガイド](mui-catalog/docs/README.md)・[蔵書管理の解説書](library/docs/README.md) |
+| MUI 版          | [蔵書管理（library）](library/)・[タスク管理（task-manager-mui）](task-manager-mui/)・[家計簿（household-budget）](household-budget/) | [MUI 部品カタログ](mui-catalog/)（動く見本）・[MUI 画面構築ガイド](mui-catalog/docs/README.md)・[蔵書管理の解説書](library/docs/README.md) |
 | CSS Modules 版  | タスク管理・在庫管理・EC・予約                                            | [UI 部品カタログ](ui-catalog/)・[タスク管理の解説書](task-manager/docs/README.md)                                           |
 
 ## お題一覧
@@ -28,6 +28,8 @@
 | お題                   | フォルダ                      | 状態   | このサンプルで学べること                                                                                  |
 | ---------------------- | ----------------------------- | ------ | --------------------------------------------------------------------------------------------------------- |
 | 蔵書管理（**MUI 版**） | [library](library/)           | 作成済 | MUI で一覧・詳細・登録・ダイアログ、RHF の Controller、貸出・期限切れの計算、URL で絞り込み・並び替え・ページ送り、ダッシュボード、通知の store |
+| タスク管理（**MUI 版**） | [task-manager-mui](task-manager-mui/) | 作成済 | CSS 版と同じお題を MUI で。ダイアログのフォーム（reset が要らない形）、Chip・StatCard・LinearProgress、ToggleButtonGroup、Grid の 3 列ボード。README に CSS 版との違いの表 |
+| 家計簿（**MUI 版**）   | [household-budget](household-budget/) | 作成済 | 1 ページだけの小さな形。種類で変わる選択肢（`useWatch`・`setValue`・`superRefine`）、月の合計・カテゴリ別の内訳（計算）、月を URL に、予算のバー |
 | タスク管理             | [task-manager](task-manager/) | 作成済 | モーダルで追加・編集（`reset`）、並び替え、日付の比較、表示設定の store、かんばんボード                   |
 | 在庫管理               | [inventory](inventory/)       | 作成済 | ページで登録・編集・詳細、URL で絞り込み、入出庫（在庫数に応じたチェック）、2つの store を動かす features |
 | EC                     | [ec-shop](ec-shop/)           | 作成済 | 商品マスタ、カート（合計の計算）、購入フォーム（メール・電話・郵便番号）、注文の確定、ページのガード      |
@@ -37,7 +39,6 @@
 | 注文管理               |                               | 未作成 |                                                                                                           |
 | 受講管理               |                               | 未作成 |                                                                                                           |
 | 掲示板                 |                               | 未作成 |                                                                                                           |
-| 家計簿                 |                               | 未作成 |                                                                                                           |
 
 各サンプルの README は **お題 → 要件 → 実装の順番 → 解答の構成 → 学習ポイント** の順に書いてある。
 
@@ -69,6 +70,8 @@ npm run dev -w ec-shop
 npm run dev -w reservation
 npm run dev -w ui-catalog     # UI 部品のカタログ
 npm run dev -w library        # 蔵書管理（MUI 版）
+npm run dev -w task-manager-mui  # タスク管理（MUI 版）
+npm run dev -w household-budget  # 家計簿（MUI 版）
 npm run dev -w mui-catalog    # MUI 部品のカタログ
 npm run dev -w guide          # 解説書・ガイド（読みもの）
 

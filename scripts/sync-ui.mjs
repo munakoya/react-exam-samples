@@ -8,7 +8,7 @@
  *
  * 元は2種類ある。アプリの package.json の dependencies に @mui/material があるかで決める。
  *   _shared/ui      … CSS Modules 版の部品（task-manager・inventory など）
- *   _shared/mui-ui  … MUI 版の部品（library・mui-catalog）
+ *   _shared/mui-ui  … MUI 版の部品（library・mui-catalog・guide など）
  */
 import { cpSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
