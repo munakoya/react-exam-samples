@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320">
+  <!-- CardMedia の見本で使う画像（山と湖） -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c7d2fe" />
+      <stop offset="1" stop-color="#eef2ff" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="320" fill="url(#sky)" />
+  <circle cx="520" cy="80" r="36" fill="#fde68a" />
+  <path d="M0 230 L150 90 L260 200 L360 110 L520 230 Z" fill="#6366f1" />
+  <path d="M120 230 L260 140 L400 230 Z" fill="#4f46e5" />
+  <path d="M330 230 L470 130 L640 230 Z" fill="#818cf8" />
+  <rect y="230" width="640" height="90" fill="#93c5fd" />
+  <path d="M60 262 H220 M300 284 H460 M500 258 H600" stroke="#dbeafe" stroke-width="4" stroke-linecap="round" />
+</svg>

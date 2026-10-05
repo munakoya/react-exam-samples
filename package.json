@@ -6,7 +6,9 @@
     "inventory",
     "ec-shop",
     "reservation",
-    "ui-catalog"
+    "ui-catalog",
+    "library",
+    "mui-catalog"
   ],
   "scripts": {
     "sync-ui": "node scripts/sync-ui.mjs",

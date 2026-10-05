@@ -54,10 +54,22 @@ const appInfo = {
     title: "会議室予約",
     description: "時間の重なり・定員のチェック、CSS Grid のスケジュール表",
   },
+  "mui-catalog": {
+    title: "MUI 部品カタログ",
+    description:
+      "Material UI の部品の押さえどころ・動く見本・props。画面の組み立て方は README の「MUI 画面構築ガイド」",
+  },
+  library: {
+    title: "蔵書管理（MUI 版）",
+    description: "MUI ＋ RHF ＋ zod ＋ Zustand。貸出・返却・期限切れ、URL で絞り込み・並び替え・ページ送り",
+  },
 };
 
 // アプリの一覧（カタログを先頭にする）
-const apps = [...workspaces].sort((a, b) => (a === "ui-catalog" ? -1 : b === "ui-catalog" ? 1 : 0));
+const catalogs = ["ui-catalog", "mui-catalog"];
+const apps = [...workspaces].sort(
+  (a, b) => Number(catalogs.includes(b)) - Number(catalogs.includes(a)),
+);
 
 // 各アプリの index.html の <head> に入れる「元の URL に戻す」スクリプト
 const restoreScript = `<script>
@@ -160,7 +172,7 @@ writeFileSync(
         margin: 0; padding: 0; list-style: none; }
       .card { display: flex; flex-direction: column; gap: 8px; padding: 20px;
         border: 1px solid var(--border); border-radius: 12px; background: #fff; }
-      .card:first-child { border-color: var(--primary); }
+      .card:nth-child(-n + 2) { border-color: var(--primary); } /* 先頭の2つ（カタログ）を強調 */
       .card p { flex: 1; margin: 0; color: var(--muted); font-size: 14px; }
       .title { color: var(--primary); font-size: 18px; font-weight: 700; text-decoration: none; }
       .title:hover { text-decoration: underline; }
@@ -171,7 +183,7 @@ writeFileSync(
     <main>
       <h1>React 試験対策サンプル集</h1>
       <p class="lead">
-        FSD・Zustand（persist）・React Hook Form ＋ zod・React Router・CSS Modules で作ったサンプル。
+        FSD・Zustand（persist）・React Hook Form ＋ zod・React Router・CSS Modules（または Material UI）で作ったサンプル。
         データはブラウザの localStorage に保存される。
       </p>
       <ul>
