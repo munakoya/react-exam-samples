@@ -54,6 +54,12 @@ type BookDef = {
 
 const bookDefs: BookDef[] = [
   {
+    id: "exam-steps",
+    title: "試験の実装手順（雛形から提出まで）",
+    description: "MUI 版の雛形をコピーして始め、要件の書き出し → 機能ごとのステップ → 仕上げ・提出までを、チェックリストで漏れなく進める",
+    dir: "starter-mui/docs/",
+  },
+  {
     id: "library",
     title: "解説書（MUI 版・蔵書管理）",
     description: "環境構築・設計・モダン JS・ライブラリ（React Router・Zustand・zod・React Hook Form・MUI）・実装手順・考え方とつまずき",
@@ -81,6 +87,7 @@ const bookDefs: BookDef[] = [
       { path: "task-manager-mui/README.md", slug: "task-manager-mui" },
       { path: "household-budget/README.md", slug: "household-budget" },
       { path: "user-management/README.md", slug: "user-management" },
+      { path: "starter-mui/README.md", slug: "starter-mui" },
       { path: "mui-catalog/README.md", slug: "mui-catalog" },
       { path: "task-manager/README.md", slug: "task-manager" },
       { path: "inventory/README.md", slug: "inventory" },

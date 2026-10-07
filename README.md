@@ -42,6 +42,12 @@
 
 各サンプルの README は **お題 → 要件 → 実装の順番 → 解答の構成 → 学習ポイント** の順に書いてある。
 
+**試験本番は [MUI 版の雛形（starter-mui）](starter-mui/) から始め、[試験の実装手順（雛形から提出まで）](starter-mui/docs/README.md) のチェックリストで進める**。雛形は環境構築済みで、各フォルダの README に書き方がある。
+
+```bash
+npx degit munakoya/react-exam-samples/starter-mui my-app   # 雛形をコピー（このあと名前を 4 か所変える）
+```
+
 **はじめての人は、まず [タスク管理の解説書](task-manager/docs/README.md) を読む**。プロジェクトの作成から、設計の考え方・モダン JS・ライブラリの使い方・実装手順・つまずきまでを、タスク管理アプリを例に説明している（ほかのサンプルも同じ作り）。
 MUI で作るなら、同じ構成の [蔵書管理の解説書（MUI 版）](library/docs/README.md) を読む。
 
@@ -73,6 +79,7 @@ npm run dev -w library        # 蔵書管理（MUI 版）
 npm run dev -w task-manager-mui  # タスク管理（MUI 版）
 npm run dev -w household-budget  # 家計簿（MUI 版）
 npm run dev -w user-management   # ユーザー管理（MUI 版・CRUD の UI ひととおり）
+npm run dev -w starter-mui       # MUI 版の雛形（試験のスタート用）
 npm run dev -w mui-catalog    # MUI 部品のカタログ
 npm run dev -w guide          # 解説書・ガイド（読みもの）
 
@@ -251,7 +258,7 @@ git subtree push --prefix=frontend/exam/samples samples main
 
 ## サンプルを増やすとき
 
-1. 既存のサンプル（CSS 版なら `inventory`、MUI 版なら `library`・CRUD 中心なら `user-management`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
+1. MUI 版なら雛形 `starter-mui`（CSS 版なら `inventory`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
 2. `entities`・`features`・`widgets`・`pages` をお題に合わせて作り直す
 3. [package.json](package.json) の `workspaces` にフォルダ名を足す
 4. [scripts/build-pages.mjs](scripts/build-pages.mjs) の `appInfo` に、公開ページのトップに出す名前と説明を足す

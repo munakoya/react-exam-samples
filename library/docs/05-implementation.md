@@ -5,28 +5,41 @@
 **1 ステップ = 動く状態 = 1 コミット**。どのステップの終わりでも、アプリは動いている。
 完成したコードは各ステップの「完成形」のリンク先にある。ここではコメントを省いた要点だけを載せる。
 
-| ステップ | 作るもの                                   | 目安  |
-| -------- | ------------------------------------------ | ----- |
-| 1        | 環境構築・テーマ・ルーティング・共通の枠   | 15 分 |
-| 2        | 本の型と store                             | 15 分 |
-| 3        | 本の一覧（表）                             | 20 分 |
-| 4        | 登録フォーム・登録ページ                   | 30 分 |
-| 5        | 詳細・編集ページ                           | 20 分 |
-| 6        | 削除・通知                                 | 15 分 |
-| 7        | 貸出・返却・状態の表示                     | 35 分 |
-| 8        | 絞り込み・並び替え・ページ送り（URL）      | 30 分 |
-| 9        | 貸出一覧・ダッシュボード                   | 25 分 |
-| 10       | 評価・タグ、削除の制限                     | 15 分 |
+各ステップは **コード → 終わりの確認（チェックボックス）→ コミット → 完成形** の順に書いてある。
+確認がすべて ✓ になってからコミットする。✓ にならないものがあれば、次のステップに進む前に直す。
+
+| ステップ | 作るもの                                 | 主に作るファイル（層）                                          | 目安  |
+| -------- | ---------------------------------------- | --------------------------------------------------------------- | ----- |
+| 1        | 環境構築・テーマ・ルーティング・共通の枠 | app・shared（[雛形](../../starter-mui/README.md)ならコピーで済む） | 15 分 |
+| 2        | 本の型と store                           | entities/book                                                   | 15 分 |
+| 3        | 本の一覧（表）                           | pages/book-list                                                 | 20 分 |
+| 4        | 登録フォーム・登録ページ                 | features/book-form・pages/book-new                              | 30 分 |
+| 5        | 詳細・編集ページ                         | pages/book-detail・pages/book-edit                              | 20 分 |
+| 6        | 削除・通知                               | features/delete-book                                            | 15 分 |
+| 7        | 貸出・返却・状態の表示                   | entities/loan・features/lend-book・return-book・widgets/book-table | 35 分 |
+| 8        | 絞り込み・並び替え・ページ送り（URL）    | features/book-filter                                            | 30 分 |
+| 9        | 貸出一覧・ダッシュボード                 | pages/loan-list・widgets/loan-table・pages/dashboard            | 25 分 |
+| 10       | 評価・タグ、削除の制限                   | features/book-form・features/delete-book                        | 15 分 |
 
 必須だけなら 1〜7（約 2 時間 30 分）。8 以降は発展。
+
+> **別のお題で作るとき**は、お題によらない形にまとめた [試験の実装手順（雛形から提出まで）](../../starter-mui/docs/README.md) の
+> [3. 機能を作る](../../starter-mui/docs/03-build.md) を使う。ステップごとに「作るファイル・やること・終わりの確認・よくある漏れ」がそろっている。
+> 追加・編集を**ダイアログ**で作る形（この解説書はページで作る形）もそちらにある。
 
 ---
 
 ## ステップ 1：環境構築・テーマ・ルーティング・共通の枠
 
 [1. プロジェクトの作成](01-setup.md) の手順どおり。
+雛形を持ち込める試験なら、[MUI 版の雛形（starter-mui）](../../starter-mui/README.md) をコピーして 4 か所を変えるだけで、このステップが終わる（ルーティングとメニューは、ページを作るたびに足す）。
 
-**確認**：メニューで全ページを行き来できる。スマホ幅で ☰ が出て開閉できる。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] メニューで全ページを行き来できる（中身はまだ空でよい）
+- [ ] スマホ幅で ☰ が出て、メニューを開閉できる
+- [ ] 存在しない URL で 404 のページが出る
+- [ ] ブラウザのタブにアプリ名が出る
 
 ```bash
 git commit -m "環境構築（MUI・テーマ・ルーティング・共通の枠）"
@@ -101,7 +114,10 @@ export const useBook = (id: string | undefined) => useBookStore((s) => s.books.f
 
 `storageKey`・`mergeWithSchema` は [shared/config](../src/shared/config/storage.ts)・[shared/lib/persist.ts](../src/shared/lib/persist.ts) をコピーする。最後に `index.ts`（窓口）から export する。
 
-**確認**：`npm run build` が通る。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] `npm run build` が通る（画面はまだ変わらない）
+- [ ] `index.ts` から型・選択肢・store を export している
 
 ```bash
 git commit -m "本の型と store を作成"
@@ -161,7 +177,10 @@ export const BookListPage = () => {
 
 表は行の操作（貸出・削除）が増えると長くなるので、あとで `widgets/book-table` に移す。
 
-**確認**：0 件の案内が出る。DevTools の Local Storage に手で本を入れると表に出る（ステップ 4 で登録できるようになる）。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 0 件の案内（EmptyState）が出る
+- [ ] DevTools の Local Storage に手で本を入れると表に出る（なくてもよい。ステップ 4 で登録できるようになる）
 
 ```bash
 git commit -m "本の一覧を表で表示"
@@ -249,7 +268,11 @@ const handleSubmit = (values: BookFormValues) => {
 <BookForm defaultValues={toFormInput()} submitLabel="登録" onSubmit={handleSubmit} onCancel={() => navigate("/books")} />
 ```
 
-**確認**：空で送信するとエラー（最初のエラーの欄にフォーカス）。正しく入れると登録され、再読み込みしても残る。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 空で送信すると、各欄の下に日本語のエラーが出て、最初のエラーの欄にカーソルが移る
+- [ ] 正しく入れると登録され、詳細（または一覧）に移る
+- [ ] **再読み込みしても残っている**
 
 ```bash
 git commit -m "本の登録フォームと登録ページを作成"
@@ -307,7 +330,12 @@ return (
 
 **⚠ フックは early return の前に呼ぶ**：`useNavigate`・`useBook`・`useBookStore` は `if (!book) return …` より上に書く。
 
-**確認**：一覧 → 詳細 → 編集 → 保存で詳細に戻り、値が変わっている。存在しない id の URL で「見つかりません」が出る。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 一覧 → 詳細 → 編集 → 保存で詳細に戻り、値が変わっている
+- [ ] 編集のフォームに今の値が入っている
+- [ ] 存在しない id の URL（`/books/abc`）で「見つかりません」が出る
+- [ ] 詳細ページで再読み込みしても表示される
 
 ```bash
 git commit -m "本の詳細・編集ページを作成"
@@ -358,7 +386,11 @@ export const DeleteBookButton = ({ book, onDeleted }: Props) => {
 <DeleteBookButton book={book} onDeleted={() => navigate("/books", { replace: true })} />
 ```
 
-**確認**：キャンセルで何も起きない。削除で一覧に戻り、下に通知が出る。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] キャンセル・Esc で何も起きない
+- [ ] 削除で一覧に戻り、下に通知が出る
+- [ ] 再読み込みしても消えたまま
 
 ```bash
 git commit -m "本の削除（確認ダイアログ）と通知を追加"
@@ -449,7 +481,12 @@ const loan = currentLoans.get(book.id);
 
 詳細ページには今の貸出の `Alert` と、貸出の履歴（[LoanHistoryTable](../src/entities/loan/ui/LoanHistoryTable.tsx)）を出す。
 
-**確認**：貸し出すと状態が「貸出中」になる。期限を昨日にした貸出を Local Storage で作ると「期限切れ」で赤くなる。返却すると「貸出可」に戻り、履歴に残る。期限に 31 日後を入れるとエラー。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 貸し出すと状態が「貸出中」になる
+- [ ] 期限を昨日にした貸出を Local Storage で作ると「期限切れ」で赤くなる（今日が期限なら期限切れにならない）
+- [ ] 返却すると「貸出可」に戻り、履歴に残る
+- [ ] 期限に 31 日後を入れるとエラー
 
 ```bash
 git commit -m "貸出・返却と、本の状態の表示を追加"
@@ -517,7 +554,12 @@ const pageBooks = sorted.slice((page - 1) * filter.perPage, page * filter.perPag
 
 表の見出しは `TableSortLabel`、表の下は `TablePagination`。**TablePagination の page は 0 から**数えるので、1 から数えるこのアプリの page と ±1 する。
 
-**確認**：条件を変えると URL が変わる。再読み込み・詳細から「戻る」でも同じ表示。並び順を変えると 1 ページ目に戻る。0 件のとき「条件をクリア」が出る。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 条件を変えると URL が変わる
+- [ ] 再読み込み・詳細から「戻る」でも同じ表示
+- [ ] 並び順・条件を変えると 1 ページ目に戻る
+- [ ] 条件に合う本がないとき「条件をクリア」が出る
 
 ```bash
 git commit -m "検索・絞り込み・並び替え・ページ送りを追加（URL に残す）"
@@ -559,7 +601,11 @@ const loanCountThisMonth = loans.filter((l) => l.loanedAt.startsWith(today.slice
 <LoanTable loans={overdueLoans} today={today} emptyMessage="期限切れの本はありません" />
 ```
 
-**確認**：数字が一覧と合っている。「期限切れ」のカードから貸出一覧の期限切れタブが開く。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] ダッシュボードの数字が一覧と合っている
+- [ ] 「期限切れ」のカードから、貸出一覧の期限切れタブが開く
+- [ ] タブを切り替えると URL が変わり、再読み込みしても同じタブ
 
 ```bash
 git commit -m "貸出一覧（タブ）とダッシュボードを追加"
@@ -622,7 +668,11 @@ const removeLoansByBook = useLoanStore((s) => s.removeLoansByBook);
 removeLoansByBook(book.id);
 ```
 
-**確認**：評価・タグが保存され、編集で元に戻る。貸出中の本の削除ボタンが押せず、理由が出る。削除すると貸出一覧からも消える。
+**終わりの確認**（全部できたらコミット）
+
+- [ ] 評価・タグが保存され、編集のフォームに元の値が入る
+- [ ] 貸出中の本の削除ボタンが押せず、理由が出る
+- [ ] 本を削除すると、貸出一覧からもその本の記録が消える
 
 ```bash
 git commit -m "評価・タグの入力と、削除の制限を追加"

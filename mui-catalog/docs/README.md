@@ -5,6 +5,7 @@
 Material UI（`@mui/material` v9）で、試験に出るような業務アプリの画面を組み立てるための読みもの。
 部品 1 つずつの使い方は [MUI 部品カタログ](https://munakoya.github.io/react-exam-samples/mui-catalog/)（動く見本・コードのコピー）、
 ライブラリと組み合わせた完成形は [蔵書管理（library）](../../library/) を見る。
+試験本番の進め方（雛形のコピーから提出まで）は [試験の実装手順](../../starter-mui/docs/README.md)。
 
 ## 章
 

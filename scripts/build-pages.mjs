@@ -72,6 +72,10 @@ const appInfo = {
     title: "家計簿（MUI 版）",
     description: "1 ページの小さな形。種類で変わるカテゴリ、月の合計・カテゴリ別の内訳、予算のバー",
   },
+  "starter-mui": {
+    title: "MUI 版の雛形（starter-mui）",
+    description: "試験のスタート用。環境構築済みで中身は空。各フォルダの README に書き方。手順は解説書の「試験の実装手順」",
+  },
   "user-management": {
     title: "ユーザー管理（MUI 版）",
     description: "CRUD の UI をひととおり。追加・編集モーダル、削除の確認、チェックボックスで選べる表（一括操作）、カード表示",

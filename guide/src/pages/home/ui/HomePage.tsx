@@ -23,6 +23,9 @@ type QuickLink = { title: string; description: string } & ({ to: string } | { hr
 
 // 試験中によく見るところ。to はこのアプリの中、href は別のアプリ（カタログ・サンプル）
 const quickLinks: QuickLink[] = [
+  { title: "試験の実装手順（チェックリスト）", description: "雛形から始めて提出まで。ステップごとに作るファイル・やること・終わりの確認", to: "/exam-steps" },
+  { title: "3. 機能を作る（ステップ 1〜9）", description: "型と store → 一覧 → 追加 → 編集 → 削除 → 詳細 → 絞り込み → 発展", to: "/exam-steps/03-build" },
+  { title: "MUI 版の雛形（starter-mui）", description: "npx degit でコピーして 4 か所変えるだけ。書き方は各フォルダの README", to: "/samples/starter-mui" },
   { title: "MUI 部品カタログ", description: "部品ごとの書き方・動く見本・コードのコピー", href: `${PAGES_URL}/mui-catalog/` },
   { title: "やりたいこと → 部品・sx の早見表", description: "MUI 画面構築ガイドの目次。v9 で変わった書き方も", to: "/mui-guide" },
   { title: "画面パターン集", description: "一覧・詳細・登録・ダッシュボードの型、お題ごとの部品の選び方", to: "/mui-guide/06-page-patterns" },
