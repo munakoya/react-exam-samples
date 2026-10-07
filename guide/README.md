@@ -15,6 +15,7 @@ npm run dev -w guide
 | URL                | 読みもの                                                                                     | 元のファイル                                 |
 | ------------------ | -------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | `/library/…`       | 解説書（MUI 版・蔵書管理）：環境構築・設計・モダン JS・ライブラリ・実装手順・考え方とつまずき | [library/docs/](../library/docs/README.md)   |
+| `/user-management/…` | 解説書（MUI 版・ユーザー管理）：全ファイルの「どこに・何を・なぜ」・データの流れ・作る手順・つまずき | [user-management/docs/](../user-management/docs/README.md) |
 | `/mui-guide/…`     | MUI 画面構築ガイド：テーマと sx・レイアウト・フォーム・一覧・ダイアログ・画面パターン集     | [mui-catalog/docs/](../mui-catalog/docs/README.md) |
 | `/task-manager/…`  | 解説書（CSS 版・タスク管理）                                                                 | [task-manager/docs/](../task-manager/docs/README.md) |
 | `/samples/…`       | サンプル集の目次と、各サンプルの README（お題・要件・学習ポイント）                          | 各フォルダの README.md                       |

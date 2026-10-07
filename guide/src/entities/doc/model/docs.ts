@@ -60,6 +60,12 @@ const bookDefs: BookDef[] = [
     dir: "library/docs/",
   },
   {
+    id: "user-management",
+    title: "解説書（MUI 版・ユーザー管理）",
+    description: "全ファイルの「どこに・何を・なぜ」、操作ごとのデータの流れ、ゼロから作る手順、つまずきと判断の基準",
+    dir: "user-management/docs/",
+  },
+  {
     id: "mui-guide",
     title: "MUI 画面構築ガイド",
     description: "テーマと sx・レイアウト・フォーム・一覧・ダイアログと通知・画面パターン集",
