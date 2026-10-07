@@ -7,34 +7,27 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import type { ReactNode } from "react";
 import { Link as RouterLink, useParams } from "react-router";
 import { EmptyState } from "@/shared/ui";
 import { getMuiImportCode, muiDocs } from "../model/muiDocs";
+import { patternDocs } from "../model/patterns";
+import { docUsages } from "../model/usages";
 import { getSharedUiFiles } from "../model/sources";
+import { AppCodeExplorer } from "./AppCodeExplorer";
 import { CodeBlock } from "./CodeBlock";
 import { Demo } from "./Demo";
 import { PropsTable } from "./PropsTable";
 import { RichText } from "./RichText";
+import { Section } from "./Section";
 import { SourceTabs } from "./SourceTabs";
 
 /**
  * 部品1つ分のページ（/:slug）
  *
- *   見出し → インポート → 押さえどころ → 見本（プレビュー＋コード）→ props →（自作部品なら）ソース
+ *   見出し → インポート → 押さえどころ → 見本（プレビュー＋コード）→ サンプルアプリでの使用例 → props →（自作部品なら）ソース
  */
 
 const propsNoteForMui = "よく使う props だけを載せている。すべての props は公式ドキュメントの API ページを見る。";
-
-// 見出し付きのまとまり（このページの中だけで使う）
-const Section = ({ title, children }: { title: string; children: ReactNode }) => (
-  <Stack component="section" spacing={2}>
-    <Typography variant="h6" component="h2" sx={{ pb: 1, borderBottom: 1, borderColor: "divider" }}>
-      {title}
-    </Typography>
-    {children}
-  </Stack>
-);
 
 export const ComponentDocPage = () => {
   const { slug } = useParams();
@@ -58,6 +51,9 @@ export const ComponentDocPage = () => {
 
   // MUI の部品なら「全部の props は公式を見る」の一文を足す
   const propsNote = [doc.propsNote, doc.sharedUi ? undefined : propsNoteForMui].filter(Boolean).join(" ");
+  // この部品を使っている画面パターン
+  const patterns = patternDocs.filter((pattern) => pattern.related.includes(doc.slug));
+  const usages = docUsages[doc.slug];
 
   return (
     // key に slug を渡し、別の部品へ移ったら中の state（開いているコードなど）をリセットする
@@ -102,6 +98,38 @@ export const ComponentDocPage = () => {
             </Stack>
           )}
         </Section>
+
+        {(usages || patterns.length > 0) && (
+          <Section title="サンプルアプリでの使用例">
+            {patterns.length > 0 && (
+              <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap", alignItems: "center" }}>
+                <Typography variant="body2" color="text.secondary">
+                  この部品を使う画面パターン：
+                </Typography>
+                {patterns.map((pattern) => (
+                  <Chip
+                    key={pattern.slug}
+                    label={pattern.shortName}
+                    component={RouterLink}
+                    to={`/patterns/${pattern.slug}`}
+                    clickable
+                    color="primary"
+                    variant="outlined"
+                    size="small"
+                  />
+                ))}
+              </Stack>
+            )}
+            {usages && (
+              <>
+                <Typography color="text.secondary">
+                  サンプルアプリの中で実際に使っているところ。左のファイルを選ぶとコードが出る（FSD のどの層に置いたかも分かる）。
+                </Typography>
+                <AppCodeExplorer files={usages} />
+              </>
+            )}
+          </Section>
+        )}
 
         <Section title="Props">
           <PropsTable props={doc.props} note={propsNote} />

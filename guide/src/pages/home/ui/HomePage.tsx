@@ -35,6 +35,8 @@ const quickLinks: QuickLink[] = [
   { title: "提出前のチェックリスト", description: "機能・見た目・コード・提出物の確認、README の書き方", to: "/library/06-thinking#6-5-提出前のチェックリスト" },
   { title: "蔵書管理（MUI 版）を動かす", description: "一覧・詳細・登録・貸出の完成形。「サンプルデータを入れる」で試せる", href: `${PAGES_URL}/library/` },
   { title: "タスク管理（MUI 版）を動かす", description: "ダイアログのフォーム・かんばんボード。CSS 版との違いは README に", href: `${PAGES_URL}/task-manager-mui/` },
+  { title: "ユーザー管理（MUI 版）を動かす", description: "追加・編集モーダル、削除の確認、チェックボックスで選べる表、カード表示", href: `${PAGES_URL}/user-management/` },
+  { title: "CRUD の画面パターン（MUI 部品カタログ）", description: "よく出る UI の 1 ファイル版の見本と、サンプルアプリのコード（FSD）を並べて見る", href: `${PAGES_URL}/mui-catalog/patterns/crud-overview` },
   { title: "家計簿（MUI 版）を動かす", description: "1 ページの小さな形。月の合計・カテゴリ別の内訳・予算", href: `${PAGES_URL}/household-budget/` },
 ];
 

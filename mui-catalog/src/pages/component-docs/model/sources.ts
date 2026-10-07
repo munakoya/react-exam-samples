@@ -54,3 +54,39 @@ const themeSources = import.meta.glob<string>(
 
 export const themeTs = themeSources["/src/app/styles/theme.ts"] ?? "";
 export const appProvidersTsx = themeSources["/src/app/providers/AppProviders.tsx"] ?? "";
+
+// ---------- サンプルアプリ（MUI 版）のソース ----------
+// 部品・画面パターンの「サンプルアプリでの使用例」に表示する。
+// 数が多いので eager にせず、表示するときに1ファイルずつ読み込む（値は「読み込む関数」）。
+// shared/ui は各アプリへのコピーなので除く（元は _shared/mui-ui。このカタログにも同じものがある）。
+// カタログだけを取り出して動かしたとき（サンプルアプリがない）は、空のまま動く。
+const appSourceLoaders = import.meta.glob<string>(
+  [
+    "@samples/{user-management,task-manager-mui,library,household-budget}/src/**/*.{ts,tsx}",
+    "!@samples/*/src/shared/ui/**",
+  ],
+  { query: "?raw", import: "default" },
+);
+
+/** glob のキー（"../user-management/src/app/App.tsx" など）を、samples からのパスにする */
+const toSamplesPath = (key: string) => key.replace(/^(?:\.\.?\/|\/)+/, "");
+
+const appSourceLoaderMap = new Map(
+  Object.entries(appSourceLoaders).map(([key, load]) => [toSamplesPath(key), load]),
+);
+
+// 同じファイルを何度も読み込まないように、読み込み中・読み込み済みの Promise を覚えておく
+const appSourceCache = new Map<string, Promise<string | undefined>>();
+
+/**
+ * サンプルアプリのファイル（"user-management/src/features/user-form/ui/UserFormDialog.tsx"）の中身を読み込む
+ * ファイルがないときは undefined。React の use() に渡して使う（AppSourceTabs）
+ */
+export const loadAppSource = (path: string) => {
+  let promise = appSourceCache.get(path);
+  if (!promise) {
+    promise = appSourceLoaderMap.get(path)?.() ?? Promise.resolve(undefined);
+    appSourceCache.set(path, promise);
+  }
+  return promise;
+};

@@ -20,7 +20,7 @@
 
 | 種類            | サンプル                                                                  | 資料                                                                                                                       |
 | --------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| MUI 版          | [蔵書管理（library）](library/)・[タスク管理（task-manager-mui）](task-manager-mui/)・[家計簿（household-budget）](household-budget/) | [MUI 部品カタログ](mui-catalog/)（動く見本）・[MUI 画面構築ガイド](mui-catalog/docs/README.md)・[蔵書管理の解説書](library/docs/README.md) |
+| MUI 版          | [ユーザー管理（user-management）](user-management/)・[蔵書管理（library）](library/)・[タスク管理（task-manager-mui）](task-manager-mui/)・[家計簿（household-budget）](household-budget/) | [MUI 部品カタログ](mui-catalog/)（動く見本・**画面パターン（CRUD）**）・[MUI 画面構築ガイド](mui-catalog/docs/README.md)・[蔵書管理の解説書](library/docs/README.md) |
 | CSS Modules 版  | タスク管理・在庫管理・EC・予約                                            | [UI 部品カタログ](ui-catalog/)・[タスク管理の解説書](task-manager/docs/README.md)                                           |
 
 ## お題一覧
@@ -34,7 +34,7 @@
 | 在庫管理               | [inventory](inventory/)       | 作成済 | ページで登録・編集・詳細、URL で絞り込み、入出庫（在庫数に応じたチェック）、2つの store を動かす features |
 | EC                     | [ec-shop](ec-shop/)           | 作成済 | 商品マスタ、カート（合計の計算）、購入フォーム（メール・電話・郵便番号）、注文の確定、ページのガード      |
 | 予約・スケジュール管理 | [reservation](reservation/)   | 作成済 | 時間の重なりチェック、定員チェック（`superRefine`）、CSS Grid のスケジュール表、URL から初期値            |
-| ユーザ管理             |                               | 未作成 |                                                                                                           |
+| ユーザー管理（**MUI 版**） | [user-management](user-management/) | 作成済 | **CRUD の UI をひととおり**。追加ボタン → モーダル、カードの編集 → 編集モーダル、削除 → 確認ダイアログ、チェックボックスで選べる表（一括削除・一括の有効／無効・行の編集／削除・並び替え・ページ送り）、表／カードの切り替え、重複チェック |
 | アルバム               |                               | 未作成 |                                                                                                           |
 | 注文管理               |                               | 未作成 |                                                                                                           |
 | 受講管理               |                               | 未作成 |                                                                                                           |
@@ -72,6 +72,7 @@ npm run dev -w ui-catalog     # UI 部品のカタログ
 npm run dev -w library        # 蔵書管理（MUI 版）
 npm run dev -w task-manager-mui  # タスク管理（MUI 版）
 npm run dev -w household-budget  # 家計簿（MUI 版）
+npm run dev -w user-management   # ユーザー管理（MUI 版・CRUD の UI ひととおり）
 npm run dev -w mui-catalog    # MUI 部品のカタログ
 npm run dev -w guide          # 解説書・ガイド（読みもの）
 
@@ -188,7 +189,8 @@ React Hook Form とのつなぎ方は、カタログの「フォームの組み�
 ### MUI 版の部品
 
 MUI 版では、ボタン・入力欄・表などは MUI の部品をそのまま使い、MUI にない組み合わせだけを `src/shared/ui/` に置く。
-**MUI 部品カタログ**（[mui-catalog](mui-catalog/)、`npm run dev -w mui-catalog`）で、MUI の部品 38 種と自作部品 9 種の 押さえどころ・見本・props を見られる。
+**MUI 部品カタログ**（[mui-catalog](mui-catalog/)、`npm run dev -w mui-catalog`）で、MUI の部品 38 種と自作部品 11 種の 押さえどころ・見本・props を見られる。
+部品のページには「サンプルアプリでの使用例」（実際のファイルと FSD の層）があり、**画面パターン（CRUD）**のページ（`/patterns/…`）では、追加モーダル・編集モーダル・削除の確認・選択できる表などを、1 ファイル版の見本とユーザー管理アプリのコードで見比べられる。
 
 | 自作部品                          | 何をするもの                                                |
 | --------------------------------- | ----------------------------------------------------------- |
@@ -196,6 +198,8 @@ MUI 版では、ボタン・入力欄・表などは MUI の部品をそのま�
 | `PageHeader`                      | パンくず・タイトル・右のボタン                              |
 | `FormTextField`                   | React Hook Form と TextField をつなぐ（`useController`）    |
 | `ConfirmDialog`                   | 「削除しますか？」の確認                                    |
+| `DialogForm`・`useFormDialog`     | ダイアログの中のフォームの枠と、追加／編集ダイアログの開閉  |
+| `DataTable`                       | 列の定義で作る表（チェックボックスで選択・一括操作・行の操作・並び替え・ページ送り） |
 | `Notifier`・`notify()`            | どこからでも出せる通知（Zustand の store ＋ Snackbar）       |
 | `EmptyState`・`DescriptionList`・`StatCard`・`QuantityStepper` | 0 件の案内・詳細の項目一覧・集計のカード・数量の ± |
 
@@ -247,7 +251,7 @@ git subtree push --prefix=frontend/exam/samples samples main
 
 ## サンプルを増やすとき
 
-1. 既存のサンプル（CSS 版なら `inventory`、MUI 版なら `library`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
+1. 既存のサンプル（CSS 版なら `inventory`、MUI 版なら `library`・CRUD 中心なら `user-management`）をフォルダごとコピーし、`package.json` の `name`・`index.html` の `<title>`・`shared/config/storage.ts` のキーを変える
 2. `entities`・`features`・`widgets`・`pages` をお題に合わせて作り直す
 3. [package.json](package.json) の `workspaces` にフォルダ名を足す
 4. [scripts/build-pages.mjs](scripts/build-pages.mjs) の `appInfo` に、公開ページのトップに出す名前と説明を足す

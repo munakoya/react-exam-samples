@@ -72,6 +72,10 @@ const appInfo = {
     title: "家計簿（MUI 版）",
     description: "1 ページの小さな形。種類で変わるカテゴリ、月の合計・カテゴリ別の内訳、予算のバー",
   },
+  "user-management": {
+    title: "ユーザー管理（MUI 版）",
+    description: "CRUD の UI をひととおり。追加・編集モーダル、削除の確認、チェックボックスで選べる表（一括操作）、カード表示",
+  },
   library: {
     title: "蔵書管理（MUI 版）",
     description: "MUI ＋ RHF ＋ zod ＋ Zustand。貸出・返却・期限切れ、URL で絞り込み・並び替え・ページ送り",

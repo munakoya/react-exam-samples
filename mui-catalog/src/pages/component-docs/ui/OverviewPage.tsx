@@ -23,6 +23,7 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { EmptyState, PageHeader } from "@/shared/ui";
 import { muiCategories, muiDocs, type MuiDoc } from "../model/muiDocs";
+import { patternDocs, type PatternDoc } from "../model/patterns";
 import { CodeBlock } from "./CodeBlock";
 import { RichText } from "./RichText";
 
@@ -84,11 +85,30 @@ const matches = (doc: MuiDoc, keyword: string) =>
     text.toLowerCase().includes(keyword),
   );
 
+/** 画面パターンの名前・説明・押さえどころのどれかにキーワードを含むか */
+const matchesPattern = (pattern: PatternDoc, keyword: string) =>
+  [pattern.name, pattern.description, ...pattern.points].some((text) => text.toLowerCase().includes(keyword));
+
+// 一覧のカード1枚（部品・画面パターンで共通）
+const LinkCard = ({ to, title, description }: { to: string; title: string; description: string }) => (
+  <Card sx={{ height: "100%" }}>
+    <CardActionArea component={RouterLink} to={to} sx={{ height: "100%", alignItems: "flex-start" }}>
+      <CardContent>
+        <Typography sx={{ fontWeight: 700, color: "primary.main" }}>{title}</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {description}
+        </Typography>
+      </CardContent>
+    </CardActionArea>
+  </Card>
+);
+
 export const OverviewPage = () => {
   // 検索のキーワードは、このページの中だけで使うので useState
   const [keyword, setKeyword] = useState("");
   const normalized = keyword.trim().toLowerCase();
   const visibleDocs = muiDocs.filter((doc) => matches(doc, normalized));
+  const visiblePatterns = patternDocs.filter((pattern) => matchesPattern(pattern, normalized));
 
   return (
     <Container maxWidth="lg" sx={{ py: 3 }}>
@@ -115,7 +135,7 @@ export const OverviewPage = () => {
           <TextField
             type="search"
             label="部品を探す"
-            placeholder="部品名・やりたいこと（例：並び替え、ページ送り、日付、通知）"
+            placeholder="部品名・やりたいこと（例：モーダル、チェックボックス、並び替え、削除、通知）"
             value={keyword}
             onChange={(event) => setKeyword(event.target.value)}
             slotProps={{
@@ -129,7 +149,27 @@ export const OverviewPage = () => {
             }}
           />
 
-          {visibleDocs.length === 0 ? (
+          {/* ----- 画面パターン（CRUD）：試験でよく出る画面を、サンプルアプリのコードと紐付けて見る ----- */}
+          {visiblePatterns.length > 0 && (
+            <Stack spacing={1.5}>
+              <Typography variant="h6" component="h2">
+                画面パターン（CRUD）
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                追加ボタン → モーダル、カードの編集 → 編集モーダル、削除 → 確認ダイアログ、チェックボックス付きの表など。
+                1ファイル版の見本と、FSD で分けたサンプルアプリ（ユーザー管理）のコードを並べて見られる。
+              </Typography>
+              <Grid container spacing={2}>
+                {visiblePatterns.map((pattern) => (
+                  <Grid key={pattern.slug} size={{ xs: 12, sm: 6, md: 4 }}>
+                    <LinkCard to={`/patterns/${pattern.slug}`} title={pattern.name} description={pattern.description} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Stack>
+          )}
+
+          {visibleDocs.length === 0 && visiblePatterns.length === 0 ? (
             <EmptyState title="見つかりません" description="別のことばで探してください。" />
           ) : (
             muiCategories.map((category) => {
@@ -144,16 +184,7 @@ export const OverviewPage = () => {
                   <Grid container spacing={2}>
                     {docs.map((doc) => (
                       <Grid key={doc.slug} size={{ xs: 12, sm: 6, md: 4 }}>
-                        <Card sx={{ height: "100%" }}>
-                          <CardActionArea component={RouterLink} to={`/${doc.slug}`} sx={{ height: "100%", alignItems: "flex-start" }}>
-                            <CardContent>
-                              <Typography sx={{ fontWeight: 700, color: "primary.main" }}>{doc.name}</Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                {doc.description}
-                              </Typography>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
+                        <LinkCard to={`/${doc.slug}`} title={doc.name} description={doc.description} />
                       </Grid>
                     ))}
                   </Grid>

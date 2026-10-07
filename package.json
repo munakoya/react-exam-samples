@@ -11,7 +11,8 @@
     "mui-catalog",
     "guide",
     "task-manager-mui",
-    "household-budget"
+    "household-budget",
+    "user-management"
   ],
   "scripts": {
     "sync-ui": "node scripts/sync-ui.mjs",

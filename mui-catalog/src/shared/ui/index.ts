@@ -4,7 +4,10 @@
 // ボタン・入力欄などは MUI の部品をそのまま使い、MUI にない組み合わせだけをここで作る。
 export { AppShell, type AppShellNavItem } from "./AppShell/AppShell";
 export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog";
+export { DataTable, type DataTableColumn } from "./DataTable/DataTable";
 export { DescriptionList, type DescriptionItem } from "./DescriptionList/DescriptionList";
+export { DialogForm } from "./DialogForm/DialogForm";
+export { useFormDialog } from "./DialogForm/useFormDialog";
 export { EmptyState } from "./EmptyState/EmptyState";
 export { FormTextField } from "./FormTextField/FormTextField";
 export { Notifier } from "./Notifier/Notifier";
