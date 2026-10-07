@@ -173,6 +173,62 @@ const countByStatus = Object.fromEntries(
 );
 ```
 
+### `Map`：id で探す・id ごとに集計する
+
+`Map` は「**キー → 値**」の対応表（メモ）。配列の `.map()` とは名前が同じだけで別物。
+2 つのデータを **id でつなぐ**とき、**id ごとに数を足す**ときに使う。
+
+```js
+const memo = new Map(); // 空のメモ
+memo.set("p1", 10); //     書く（同じキーなら上書き）
+memo.get("p1"); //         読む → 10
+memo.get("p9"); //         ない → undefined
+memo.has("p1"); //         あるか → true
+
+// 配列から作る：[キー, 値] の組を渡す
+const productMap = new Map(products.map((p) => [p.id, p]));
+productMap.get("p1")?.name; // "りんご"
+```
+
+**① id で相手を探す**：行ごとに `find` するより、先に Map を作って `get` するほうが速く、短い。
+
+```js
+const productMap = new Map(products.map((p) => [p.id, p]));
+sales.map((sale) => ({
+  ...sale,
+  productName: productMap.get(sale.productId)?.name ?? "（削除された商品）", // 見つからない場合も考える
+}));
+```
+
+**② id ごとに足し合わせる**：「**読む → 足す → 書き戻す**」を 1 件ずつ繰り返す。
+
+```js
+// 仕入れ・販売の記録から、商品ごとの合計を出す
+const sumByProduct = (records) => {
+  const memo = new Map();
+  for (const record of records) {
+    const before = memo.get(record.productId) ?? 0; // 今までの合計（まだなければ 0）
+    memo.set(record.productId, before + record.quantity); // 足して書き戻す
+  }
+  return memo;
+};
+
+const purchased = sumByProduct(purchases); // p1=30, p2=5
+const sold = sumByProduct(sales); //         p1=12
+
+// 行は「商品」から作る（仕入れから作ると、まだ仕入れていない商品が消える）
+const rows = products.map((p) => {
+  const stock = (purchased.get(p.id) ?? 0) - (sold.get(p.id) ?? 0); // ?? 0 がないと NaN
+  return { ...p, stock };
+});
+```
+
+- 在庫のように**計算で出せる値は保存しない**。描画のたびに計算すれば、仕入れ・販売が増えても必ず正しい
+- Map は計算の途中で使う道具。**JSON・localStorage にはそのまま保存できない**（`{}` になる）ので、store に入れない
+- 「含まれているか」だけを調べるなら `Set`：`new Set(ids).has(id)`。重複を除くなら `[...new Set(array)]`
+
+素直な for 文の書き方・メモの変わり方・画面での使い方まで、順を追った説明は [蔵書管理の解説書の 3-6](../../library/docs/03-modern-js.md) にある。
+
 ## 3-6. JSX の中の条件分岐
 
 ```tsx

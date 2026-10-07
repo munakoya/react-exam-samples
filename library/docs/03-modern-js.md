@@ -151,27 +151,198 @@ const pageItems = items.slice((page - 1) * perPage, page * perPage);
 
 ## 3-6. `Map` と `Set`
 
-### Map：キーから値をすぐ取り出す
+`Map` は「**キー → 値**」の対応表（メモ）。試験では、**2 つのデータを id でつなぐ**ときと、**id ごとに数を足し合わせる**ときによく使う。
+
+> 配列の `.map()`（1 つずつ変換する）とは**別物**。名前が同じだけで関係ない。
+
+### Map の基本
 
 ```js
-// 本の id → 今の貸出
-const currentLoans = new Map(loans.filter(isActive).map((loan) => [loan.bookId, loan]));
+const memo = new Map(); // 空のメモを作る
 
-currentLoans.get(book.id); // その本の今の貸出（なければ undefined）
-currentLoans.has(book.id); // 貸出中か
-currentLoans.size; // 貸出中の冊数
+memo.set("p1", 10); // 書く：キー "p1" → 値 10（同じキーなら上書き）
+memo.get("p1"); // 読む：10
+memo.get("p9"); // まだ書いていない → undefined
+memo.has("p1"); // あるか：true
+memo.size; // 件数：1
+memo.delete("p1"); // 消す
 ```
 
-一覧で本ごとに `loans.find(…)` すると「本の数 × 貸出の数」だけ探すことになる。先に Map を作っておくと、`get` ですぐ取り出せる。
-このアプリでは：[loan.ts](../src/entities/loan/model/loan.ts) の `getCurrentLoanMap`、[LoanTable.tsx](../src/widgets/loan-table/ui/LoanTable.tsx) の `bookMap`。
-
-### Set：重複を取り除く
+配列から一気に作るときは、`[キー, 値]` の組の配列を渡す。
 
 ```js
-[...new Set(["古典", "名作", "古典"])]; // ["古典", "名作"]
+const books = [
+  { id: "b1", title: "坊っちゃん" },
+  { id: "b2", title: "こころ" },
+];
+const bookMap = new Map(books.map((book) => [book.id, book]));
+//                        ↑ 配列の .map で [id, 本] の組を作り、それを Map に渡す
+
+bookMap.get("b2"); // { id: "b2", title: "こころ" }
+bookMap.get("b2")?.title; // "こころ"
 ```
 
-このアプリでは：[BookForm.tsx](../src/features/book-form/ui/BookForm.tsx) のタグ（入力されたタグの重複を除く・全部の本のタグから候補を作る）。
+### 使い方 ①：id で相手を探す（2 つのデータをつなぐ）
+
+貸出の記録には `bookId` しかない。表に本のタイトルを出すには、id から本を探す必要がある。
+
+```js
+// ✕ 行ごとに find：貸出 1 件ごとに、本の一覧を先頭から見直す
+loans.map((loan) => books.find((book) => book.id === loan.bookId));
+
+// ○ 先に「id → 本」の表を 1 回作り、あとは get で一発
+const bookMap = new Map(books.map((book) => [book.id, book]));
+loans.map((loan) => {
+  const book = bookMap.get(loan.bookId);
+  const title = book?.title ?? "（削除された本）"; // 相手が見つからない場合も必ず考える
+  return { ...loan, title };
+});
+```
+
+貸出が 100 件・本が 1000 冊だと、`find` は最悪 10 万回比べる。Map なら作るのに 1000 回、引くのに 100 回で済む。
+このアプリでは：[LoanTable.tsx](../src/widgets/loan-table/ui/LoanTable.tsx) の `bookMap`、[loan.ts](../src/entities/loan/model/loan.ts) の `getCurrentLoanMap`（本の id → 今の貸出）。
+
+### 使い方 ②：id ごとに数を足し合わせる（集計）
+
+例：商品・仕入れ・販売のデータから、商品ごとの在庫数を出す。
+
+```js
+const products = [
+  { id: "p1", name: "りんご" },
+  { id: "p2", name: "みかん" },
+  { id: "p3", name: "ぶどう" }, // まだ仕入れも販売もしていない
+];
+const purchases = [ // 仕入れ
+  { productId: "p1", quantity: 10 },
+  { productId: "p2", quantity: 5 },
+  { productId: "p1", quantity: 20 },
+];
+const sales = [ // 販売
+  { productId: "p1", quantity: 8 },
+  { productId: "p1", quantity: 4 },
+];
+```
+
+手で計算するときと同じく、**① 仕入れを商品ごとに足す → ② 販売を商品ごとに足す → ③ 仕入れ − 販売**。
+
+#### まずは素直に書く（これで十分）
+
+```js
+const toStockRows = (products, purchases, sales) =>
+  products.map((product) => {
+    let purchased = 0;
+    for (const p of purchases) {
+      if (p.productId === product.id) purchased += p.quantity; // この商品の仕入れだけ足す
+    }
+    let sold = 0;
+    for (const s of sales) {
+      if (s.productId === product.id) sold += s.quantity; // この商品の販売だけ足す
+    }
+    return { ...product, stock: purchased - sold };
+  });
+```
+
+商品ごとに、仕入れ・販売の一覧を**毎回最初から**見直している。数百件ならこれで困らない。
+
+#### Map で書く（先にメモを作る）
+
+仕入れの一覧を **1 回だけ** 見て、「商品ごとの合計」のメモを作っておく。
+
+```js
+const sumByProduct = (records) => {
+  const memo = new Map(); // 空のメモ
+  for (const record of records) {
+    const before = memo.get(record.productId) ?? 0; // ① 今までの合計を読む（まだなければ 0）
+    const after = before + record.quantity; //          ② 今回の数を足す
+    memo.set(record.productId, after); //               ③ メモに書き戻す
+  }
+  return memo;
+};
+```
+
+「**読む → 足す → 書き戻す**」。メモ帳の数字を消して、足した数を書き直すのと同じ。仕入れで動かすと、メモはこう変わる。
+
+```text
+はじめ                                   メモ：（空）
+p1 を 10 個 → 読む 0  → 足して 10 を書く   メモ：p1=10
+p2 を 5 個  → 読む 0  → 足して 5 を書く    メモ：p1=10, p2=5
+p1 を 20 個 → 読む 10 → 足して 30 を書く   メモ：p1=30, p2=5
+```
+
+あとは商品ごとにメモを見て引き算するだけ。
+
+```js
+const toStockRows = (products, purchases, sales) => {
+  const purchasedMemo = sumByProduct(purchases); // p1=30, p2=5
+  const soldMemo = sumByProduct(sales); //         p1=12
+
+  return products.map((product) => {
+    const purchased = purchasedMemo.get(product.id) ?? 0;
+    const sold = soldMemo.get(product.id) ?? 0;
+    return { ...product, purchased, sold, stock: purchased - sold };
+  });
+};
+// → りんご 30 − 12 = 18、みかん 5 − 0 = 5、ぶどう 0 − 0 = 0
+```
+
+| ポイント                     | 理由                                                                                      |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| `?? 0`                       | 記録が 1 件もない商品はメモにない（`undefined`）。0 にしないと在庫が `NaN` になる          |
+| **商品（products）から**行を作る | 仕入れから作ると、まだ仕入れていない商品（ぶどう）が表から消える。表の 1 行 ＝ 1 商品 |
+| 在庫を**保存しない**         | 仕入れ − 販売 で必ず出せる。保存すると、仕入れ・販売のたびに書き換える処理が要り、ずれる |
+| 1 行に詰めない               | `memo.set(id, (memo.get(id) ?? 0) + n)` は同じ意味だが読みにくい。慣れるまでは 3 行で書く |
+
+素直な書き方と Map の書き方は**結果が同じ**。試験ではまず素直に書いて動かし、余裕があれば Map にする。
+
+### 画面ではどう使うか
+
+つないだ結果・集計した結果は **store に保存せず、描画のたびに計算**する（[2 章](02-design.md) の「計算できるものは持たない」）。
+
+```tsx
+const products = useProductStore((s) => s.products);
+const purchases = usePurchaseStore((s) => s.purchases);
+const sales = useSaleStore((s) => s.sales);
+const rows = toStockRows(products, purchases, sales); // 仕入れ・販売が増えれば自動で計算し直される
+```
+
+| 状況                                                       | 書く場所                                       |
+| ---------------------------------------------------------- | ---------------------------------------------- |
+| 1 か所で表示するだけ                                       | コンポーネントの中                             |
+| つないだ値で並び替え・絞り込みする、2 か所以上で使う       | `model/` の関数（`toStockRows` のような）      |
+| 複数の store を読む部分まで、何画面でも繰り返す            | カスタムフック（中で `model/` の関数を呼ぶ）   |
+
+- ⚠ **セレクターの中で計算しない**：`useStore((s) => toStockRows(s.products, …))` は毎回新しい配列を返し、無限に再描画される。配列を取り出してから、外で計算する
+- 2 つ以上の entities をまたぐ計算は entities には書かない（entities どうしは import しない）。使う側の widgets・features の `model/` に置く
+
+### Map とオブジェクト、どちらを使うか
+
+`Object.fromEntries(books.map((b) => [b.id, b]))` でも同じことはできるが、「id から探す表」なら Map がおすすめ。
+
+|                  | Map                                                        | オブジェクト                                     |
+| ---------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| ないキーの型     | `get` が `Book \| undefined` になり、「ないかも」に気付ける | `obj["b9"]` が `Book` 型のままで、気付けない     |
+| キー             | 何でも（数値・オブジェクトも）                             | 文字列だけ                                       |
+| JSON・localStorage | **そのまま保存できない**                                 | 保存できる                                       |
+
+Map は**計算の途中で使う道具**。store に入れて persist したり、`JSON.stringify` したりはしない（`{}` になって中身が消える）。保存するのは元の配列だけにする。
+
+### Set：「含まれているか」と重複の除去
+
+`Set` は**値だけの集まり**（重複なし）。
+
+```js
+const selected = new Set(["u1", "u3"]);
+selected.has("u1"); // true … 含まれているか（配列の includes より速い）
+
+[...new Set(["古典", "名作", "古典"])]; // ["古典", "名作"] … 重複を取り除いて配列に戻す
+```
+
+|       | 持つもの   | 使いどころ                                 |
+| ----- | ---------- | ------------------------------------------ |
+| `Map` | キー → 値  | id から本・ユーザーを**取り出す**、id ごとに**集計する** |
+| `Set` | 値だけ     | id が**含まれているか**調べる、重複を除く  |
+
+このアプリでは：[BookForm.tsx](../src/features/book-form/ui/BookForm.tsx) のタグ（入力されたタグの重複を除く・全部の本のタグから候補を作る）。ユーザー管理の [DataTable.tsx](../../user-management/src/shared/ui/DataTable/DataTable.tsx) では、選択中の id を `Set` にして行ごとに `has` で調べている。
 
 ## 3-7. JSX の中の条件分岐
 
